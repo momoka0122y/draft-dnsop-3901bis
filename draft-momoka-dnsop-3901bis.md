@@ -87,7 +87,9 @@ Furthermore, the following terms are used with a defined meaning:
 - "dual-stack name server": A name server that is both an "IPv4 name server"
   and also an "IPv6 name server".
 
-# Name Space Fragmentation: following the referral chain
+# IP Version Support Related Challenges for DNS Resolution
+
+## Name Space Fragmentation: following the referral chain
 
 A resolver that tries to look up a name starts out at the root, and
 follows referrals until it is referred to a name server that is
@@ -114,7 +116,23 @@ available only over IPv4 transport, only over IPv6 or both.
 Having DNS data available on both transports is the optimal
 situation.
 
+## Reasons for Broken IPv6 Delegation
 
+Even when an administrator thinks they have enabled IPv6 on their authoritative name server misconfiguration specific to IPv6 may break the DNS delegation chain of a zone and prevent any of its records from resolving in an IPv6-only scenario. These misconfigurations can be kept for a long time as resolvers can fallback to IPv4.
+
+The following misconfigurations can cause broken IPv6-delegation in an IPv6-only setting:
+
+No AAAA records for NS names: If none of the NS records for a zone in their parent zone have associated AAAA records, resolution via IPv6 is not possible.
+
+Missing GLUE: If the name from an NS record for a zone is in-bailiwick, i.e., the name is within the zone or below, a parent zone must contain an IPv6 GLUE record, i.e., a parent must serve the corresponding AAAA record(s) as ADDITIONAL data when returning the NS record in the ANSWER section.
+
+No AAAA record for in-bailiwick NS : If an NS record of a zone points to a name that is in-bailiwick but the name lacks AAAA record(s) in its zone, IPv6-only resolution will fail even if the parent provides GLUE, when the recursive server validates the delegation path. One such example is Unbound with the setting harden-glue: yes–the default.
+
+Zone of out-of-bailiwick NS es not resolving: If an NS record of a zone is out-of-bailiwick, the corresponding zone must be IPv6-resolvable as well. It is insufficient if the name pointed to by the NS record has an associated AAAA record.
+
+Parent zone not IPv6-resolvable: For a zone to be resolvable via IPv6 the parent zones up to the root zone must be IPv6-resolvable. Any non-IPv6-resolvable zone breaks the delegation chain for all its children.
+
+The above misconfigurations are not mutually exclusive.
 
 
 # Policy Based Avoidance of Name Space Fragmentation
@@ -123,6 +141,8 @@ Today there are a lot DNS "zones" on the public Internet that
 are available over IPv6 transport, and the numbers are growing year by year.
 However, there are still a lot of "zones" that are not yet IPv6 capable so
 resolvers still need IPv4 connectivity to resolve all domain names.
+
+## Guidelines for DNS Zone Configuration
 
 Having zones served only by IPv6-only name server would not be
 a good development either, since this will fragment the previously
@@ -148,24 +168,6 @@ Both IPv4 and IPv6 transports should serve identical DNS data to ensure a consis
 Note: zone validation processes SHOULD ensure that there is at least
 one IPv4 address record available for the name servers of any child
 delegations within the zone.
-
-### Reasons for Broken IPv6 Delegation
-
-Even when an administrator thinks they have enabled IPv6 on their authoritative name server misconfiguration specific to IPv6 may break the DNS delegation chain of a zone and prevent any of its records from resolving in an IPv6-only scenario. These misconfigurations can be kept for a long time as resolvers can fallback to IPv4.
-
-The following misconfigurations can cause broken IPv6-delegation in an IPv6-only setting:
-
-No AAAA records for NS names: If none of the NS records for a zone in their parent zone have associated AAAA records, resolution via IPv6 is not possible.
-
-Missing GLUE: If the name from an NS record for a zone is in-bailiwick, i.e., the name is within the zone or below, a parent zone must contain an IPv6 GLUE record, i.e., a parent must serve the corresponding AAAA record(s) as ADDITIONAL data when returning the NS record in the ANSWER section.
-
-No AAAA record for in-bailiwick NS : If an NS record of a zone points to a name that is in-bailiwick but the name lacks AAAA record(s) in its zone, IPv6-only resolution will fail even if the parent provides GLUE, when the recursive server validates the delegation path. One such example is Unbound with the setting harden-glue: yes–the default.
-
-Zone of out-of-bailiwick NS es not resolving: If an NS record of a zone is out-of-bailiwick, the corresponding zone must be IPv6-resolvable as well. It is insufficient if the name pointed to by the NS record has an associated AAAA record.
-
-Parent zone not IPv6-resolvable: For a zone to be resolvable via IPv6 the parent zones up to the root zone must be IPv6-resolvable. Any non-IPv6-resolvable zone breaks the delegation chain for all its children.
-
-The above misconfigurations are not mutually exclusive.
 
 
 ## Guidelines for DNS Resolvers
