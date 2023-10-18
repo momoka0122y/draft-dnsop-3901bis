@@ -44,16 +44,25 @@ carried in a mixed environment of IPv4 and IPv6 networks.
 
 # Introduction
 
-Today, the Internet is a mixture of IPv4 and IPv6 networks. This creates a
-complex landscape where authoritative name servers might be accessible only
-via specific network protocols. This poses a challenge for resolvers that
-are limited to using either IPv4 or IPv6, as they might encounter
-unreachable servers during the name resolution process.
+Despite IPv6 being first discussed in the mid 1990s {{RFC1883}}, consistent deployment thorughout the whole Internet has not yet been accomplished.
+Hence, today, the Internet is a mixture of IPv4, dual-stack (networks connected via both IP protocol versions), and IPv6 networks.
 
-Ideally, making DNS
+This creates a
+complex landscape where authoritative name servers might be accessible only
+via specific network protocols. At the same time, DNS resolvers may only be able to access the Internet via either IPv4 or IPv6. This poses a challenge for such resolvers,
+as they may encounter names for which queries have to be sent to authoritative name servers with which they do not share an IP protocol version
+during the name resolution process.
+
+In this document, we discuss:
+- IP protocol version related namespace fragmentation and best-practices for avoiding it.
+- Guidelines for configuring authorative name servers for zones.
+- Guidelines for operating recursive DNS resolvers.
+
+While transitional technologies and dual-stack setups may mitigate some of the issues of DNS reolution in a mixed protocol-version Internet,
+making DNS
 data accessible over both IPv4 and IPv6 is the most robust and flexible
 approach, as it allows resolvers to reach the information they need without
-requiring intermediary translation or forwarding services.
+requiring intermediary translation or forwarding services which may introduce additional failure cases.
 
 
 # Terminology
