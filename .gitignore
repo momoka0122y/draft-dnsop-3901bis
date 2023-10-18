@@ -17,8 +17,6 @@
 /versioned/
 Gemfile.lock
 archive.json
-draft-momoka-v6ops-ipv6-only-resolver.xml
-draft-momoka-v6ops-ipv6-onlyl-resolver.xml
 package-lock.json
 report.xml
 !requirements.txt
