@@ -89,6 +89,10 @@ Furthermore, the following terms are used with a defined meaning:
 
 # IP Version Support Related Challenges for DNS Resolution
 
+In a mixed IP protocol Internet, DNS faces challenges either due to configured fragmentation, i.e., DNS zones being consistently configured to only support either IPv4 or IPv6, and due to misconfigurations leading to a situation where a zone is not resolvable by either IPv4 or IPv6 only resolvers due to a misconfiguration.
+The latter cases are often hard to identify, as the impact of misconfigurations for only one IP protocol version (IPv4 or IPv6) may be hidden in a dual-stack setting.
+In the worst case, a specific name may only be resolvable via dual-stack enabled resolvers.
+
 ## Name Space Fragmentation: following the referral chain
 
 A resolver that tries to look up a name starts out at the root, and
