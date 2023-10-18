@@ -54,6 +54,7 @@ as they may encounter names for which queries have to be sent to authoritative n
 during the name resolution process.
 
 In this document, we discuss:
+
 - IP protocol version related namespace fragmentation and best-practices for avoiding it.
 - Guidelines for configuring authorative name servers for zones.
 - Guidelines for operating recursive DNS resolvers.
@@ -76,6 +77,7 @@ capitals, as shown here.
 
 This document uses DNS terminology as described in {{?RFC8499}}.
 Furthermore, the following terms are used with a defined meaning:
+
 - "IPv4 name server": This refers to a name server providing DNS
   services reachable via IPv4. It does not imply anything about what DNS data is
   served, but requires DNS queries to be received and answered over IPv4.
