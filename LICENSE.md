@@ -1,4 +1,4 @@
 # License
 
 See the
-[guidelines for contributions](https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/momoka0122y/draft-dnsop-3901bis/blob/main/CONTRIBUTING.md).
