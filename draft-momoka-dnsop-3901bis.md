@@ -74,17 +74,16 @@ capitals, as shown here.
 
 # Terminology
 
-DNS terminology is as described in {{?RFC8499}}.
-
-
-The phrase "IPv4 name server" indicates a name server available over
-IPv4 transport.  It does not imply anything about what DNS  data is
-served.  Likewise, "IPv6 name server" indicates a name server
-available over IPv6 transport.  The phrase "dual-stack name server"
-indicates a name server that is actually configured to run both
-protocols, IPv4 and IPv6, and not merely a server running on a
-system capable of running both but actually configured to run only
-one.
+This document uses DNS terminology as described in {{?RFC8499}}.
+Furthermore, the following terms are used with a defined meaning:
+- "IPv4 name server": This refers to a name server providing DNS
+  services reachable via IPv4. It does not imply anything about what DNS data is
+  served, but requires DNS queries to be received and answered over IPv4.
+- "IPv6 name server": This refers to a name server providing DNS
+  services reachable via IPv6. It does not imply anything about what DNS data is
+  served, but requires DNS queries to be received and answered over IPv6.
+- "dual-stack name server": A name server that is both an "IPv4 name server"
+  and also an "IPv6 name server".
 
 # Name Space Fragmentation: following the referral chain
 
