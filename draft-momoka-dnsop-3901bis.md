@@ -44,7 +44,7 @@ carried in a mixed environment of IPv4 and IPv6 networks.
 
 # Introduction
 
-Despite IPv6 being first discussed in the mid 1990s {{RFC1883}}, consistent deployment thorughout the whole Internet has not yet been accomplished.
+Despite IPv6 being first discussed in the mid 1990s {{?RFC1883}}, consistent deployment thorughout the whole Internet has not yet been accomplished.
 Hence, today, the Internet is a mixture of IPv4, dual-stack (networks connected via both IP protocol versions), and IPv6 networks.
 
 This creates a
