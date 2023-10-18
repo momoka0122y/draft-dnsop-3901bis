@@ -182,7 +182,7 @@ scenarios.
 
 # IANA Considerations
 
-This document has no IANA actions.
+This document does not require IANA actions.
 
 
 # Acknowledgments
