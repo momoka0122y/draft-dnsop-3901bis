@@ -87,40 +87,24 @@ Furthermore, the following terms are used with a defined meaning:
 - "dual-stack name server": A name server that is both an "IPv4 name server"
   and also an "IPv6 name server".
 
-# IP Version Support Related Challenges for DNS Resolution
-
-In a mixed IP protocol Internet, DNS faces challenges either due to configured fragmentation, i.e., DNS zones being consistently configured to only support either IPv4 or IPv6, and due to misconfigurations leading to a situation where a zone is not resolvable by either IPv4 or IPv6 only resolvers due to a misconfiguration.
-The latter cases are often hard to identify, as the impact of misconfigurations for only one IP protocol version (IPv4 or IPv6) may be hidden in a dual-stack setting.
-In the worst case, a specific name may only be resolvable via dual-stack enabled resolvers.
-
-## Name Space Fragmentation: following the referral chain
+# Name Space Fragmentation
 
 A resolver that tries to look up a name starts out at the root, and
 follows referrals until it is referred to a name server that is
 authoritative for the name.  If somewhere down the chain of referrals
-it is referred to a name server that is only accessible over a
+it is referred to a name server that is, based on the referral, only accessible over a
 transport which the resolver cannot use, the resolver is unable to
-finish the task.
+continue DNS resolution.
 
-With all DNS data only available over IPv4 transport everything is
-simple.  IPv4 resolvers can use the intended mechanism of following
-referrals from the root and down while IPv6 resolvers have to work
-through a "translator", i.e., they have to use a recursive name
-server on a so-called "dual stack" host as a "forwarder" since they
-cannot access the DNS data directly.
+If this occurs, the DNS has, effectively, fragmented based on the resolver's and authoritative's mismatching IP protocol version support.
 
-With all DNS data only available over IPv6 transport everything would
-be equally simple, with the exception of IPv4 recursive name servers
-having to switch to a forwarding configuration.
+In a mixed IP protocol Internet, this fragmentation can be due to DNS zones being consistently configured to only support either IPv4 or IPv6, or due to misconfigurations leading to a situation where a zone is not resolvable by either IPv4 or IPv6 only resolvers due to a misconfiguration.
+The latter cases are often hard to identify, as the impact of misconfigurations for only one IP protocol version (IPv4 or IPv6) may be hidden in a dual-stack setting.
+In the worst case, a specific name may only be resolvable via dual-stack enabled resolvers.
 
-The transition from IPv4 only to a mixture of IPv4 and IPv6, with
-three categories of DNS data depending on whether the information is
-available only over IPv4 transport, only over IPv6 or both.
+## Reasons for Intentional IP Protocol Related Name Space Fragmentation
 
-Having DNS data available on both transports is the optimal
-situation.
 
-## Reasons for Broken IPv6 Delegation
 
 Even when an administrator thinks they have enabled IPv6 on their authoritative name server misconfiguration specific to IPv6 may break the DNS delegation chain of a zone and prevent any of its records from resolving in an IPv6-only scenario. These misconfigurations can be kept for a long time as resolvers can fallback to IPv4.
 
