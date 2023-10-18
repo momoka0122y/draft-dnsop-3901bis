@@ -64,14 +64,15 @@ data accessible over both IPv4 and IPv6 is the most robust and flexible
 approach, as it allows resolvers to reach the information they need without
 requiring intermediary translation or forwarding services which may introduce additional failure cases.
 
-
-# Terminology
+## Requirements Language
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
 "OPTIONAL" in this document are to be interpreted as described in BCP
 14 {{!RFC2119}} {{?RFC8174}} when, and only when, they appear in all
 capitals, as shown here.
+
+# Terminology
 
 DNS terminology is as described in {{?RFC8499}}.
 
