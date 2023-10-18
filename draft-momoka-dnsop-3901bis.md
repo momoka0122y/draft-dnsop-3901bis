@@ -36,9 +36,9 @@ informative:
 
 --- abstract
 
-This memo provides guidelines and Best Current Practice for operating
-DNS in a world where queries and responses are carried in a mixed
-environment of IPv4 and IPv6 networks.
+This memo provides guidelines and documnets Best Current Practice for operating
+authoritative and recursive DNS servers given that queries and responses are
+carried in a mixed environment of IPv4 and IPv6 networks.
 
 --- middle
 
