@@ -130,46 +130,41 @@ Most commonly, this is realized by consciously implementing points 1-3 from the 
 
 # Policy Based Avoidance of Name Space Fragmentation
 
-Today there are a lot DNS "zones" on the public Internet that
-are available over IPv6 transport, and the numbers are growing year by year.
-However, there are still a lot of "zones" that are not yet IPv6 capable so
-resolvers still need IPv4 connectivity to resolve all domain names.
+With the final exhaustion of IPv4 pools in RIRs and the progressing deployment of IPv6, there no longer is a "preferred" IP version.
+Yet, while we now observe the first zones becoming exclusively IPv6 resolvable, we also still see a major portion of zones solely relying on legacy IP.
+Hence, at the moment, dual stack connectivity is instrumental to be able to resolve zones.
 
-## Guidelines for DNS Zone Configuration
-
-Having zones served only by IPv6-only name server would not be
-a good development either, since this will fragment the previously
-unfragmented IPv4 name space and there are strong reasons to find a
-mechanism to avoid it.
+Having zones served only by name servers reachable via one IP version would fragment the DNS.
+Hence, we need to find a way to avoid this fragmentation.
 
 The recommended approach to maintain name space continuity is to use
-administrative policies, as described in the next section.
+administrative policies, as described in this section.
 
+## Guidelines for DNS Zone Configuration
+It is usually recommended that DNS zones contain at least two name servers, which are geographically diverse and operate under different routing policies.
+To reduce the chance of dns name space fragmentation, it is RECOMMENDED that at least two NS for a zone are dual stack name servers.
+Specitifcally, this means that the folowing minimal requirements hold:
 
-## Guidelines for Authoritative Name Servers
-
-IPv4 adoption:
+- IPv4 adoption:
 Every authoritative DNS zone SHOULD be served by at least one IPv4-reachable authoritative name server to maintain name space continuity.
-
-IPv6 Adoption:
-Authoritative name servers SHOULD aim to be accessible via IPv6 to ensure service reliability for IPv6-only resolvers.
-It is recognized that some networks have not yet adopted IPv6 connectivity, making this a challenging guideline to implement universally. However, for networks that do have IPv6 capability but have not yet configured their authoritative name servers to run on IPv6, it is recommended to do so to prevent any disruption in services for IPv6-only resolvers.
-
-Consistency:
+The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) MUST not rely on IPv6 connectivity being available.
+As we acknowledge IPv6 scarcity, operators MAY opt to not provide DNS services via IPv4, if they can ensure that all clients expected to resolve this zone do support DNS resolution via IPv6.
+- IPv6 Adoption:
+Every authoritative DNS zone SHOULD be served by at least one IPv6-reachable authoritative name server to maintain name space continuity.
+The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) MUST not rely on IPv6 connectivity being available.
+- Consistency:
 Both IPv4 and IPv6 transports should serve identical DNS data to ensure a consistent resolution experience across different network types.
-
-Note: zone validation processes SHOULD ensure that there is at least
-one IPv4 address record available for the name servers of any child
+- Note: zone validation processes SHOULD ensure that there is at least
+one IPv4 address record and one IPv6 address record available for the name servers of any child
 delegations within the zone.
-
 
 ## Guidelines for DNS Resolvers
 
-Every iterative name server SHOULD be either IPv4-only or dual stack.
+Every iterative name server SHOULD be either IPv6-only with a transition mechanism for IPv4 reachability or dual stack.
 
-The zones a IPv6-only iterative resolvers can resolve are growing but as they cannot fully resolve all zones, they are not advisable at the moment.
+The zones a IPv6-only iterative resolvers can resolve are growing but as they cannot fully resolve all zones, the use of a transition mechanism is RECOMMENDED "cite other draft".
 
-While IPv6-only iterative resolvers are not recommended, configurations may be designed where such resolvers forward queries to a set of dual-stack recursive name servers that perform the actual recursive queries.
+Alternatively, in absence of a transition mechanism, IPv6 only resolvers MAY use a configuration where such resolvers forward queries failing IPv6 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
 
 # Security Considerations
 
