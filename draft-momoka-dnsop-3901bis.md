@@ -107,7 +107,7 @@ In the worst case, a specific name may only be resolvable via dual-stack enabled
 
 ## Misconfigurations Causing IP Version Related Name Space Fragmentation
 
-Even when an administrator thinks they have enabled support for a specific IP version on their authoritative name server, various misconfigurations may break the DNS delegation chain of a zone for that protocol and prevent any of its records from resolving for clients only supporting that IP version. 
+Even when an administrator thinks they have enabled support for a specific IP version on their authoritative name server, various misconfigurations may break the DNS delegation chain of a zone for that protocol and prevent any of its records from resolving for clients only supporting that IP version.
 These misconfigurations can be kept hidden if most clients can successfully fall back to the other IP version.
 As such, these issues are more common for IPv6 resolution related name space fragmentation.
 
