@@ -57,8 +57,8 @@
 				Hence, today, the Internet is a mixture of IPv4, dual-stack (networks connected via both IP versions), and IPv6 networks.
 			</t>
 			<t>
-				This creates a complex landscape where authoritative name servers might be accessible only via specific network protocols.
-				At the same time, DNS resolvers may only be able to access the Internet via either IPv4 or IPv6. This poses a challenge for such resolvers, as they may encounter names for which queries must be directed to authoritative name servers with which they do not share an IP version during the name resolution process.
+				This creates a complex landscape where authoritative name servers might be accessible only via specific network protocols <xref target="V6DNSRDY-23" format="default"/>.
+				At the same time, DNS resolvers may only be able to access the Internet via either IPv4 or IPv6. This poses a challenge for such resolvers, as they may encounter names for which queries must be directed to authoritative name servers with which they do not share an IP version during the name resolution process <xref target="draft-momoka-v6ops-ipv6-only-resolver-02" format="default"/>.
 			</t>
 			<t>In this document, we discuss:</t>
 			<ul spacing="normal">
@@ -283,6 +283,52 @@
 				<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3910.xml"/>
 				<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
 				<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8499.xml"/>
+				<reference anchor="draft-momoka-v6ops-ipv6-only-resolver-02" target="https://datatracker.ietf.org/doc/draft-momoka-v6ops-ipv6-only-resolver/02/">
+					<front>
+						<title>IPv6-only Capable Resolvers Utilising NAT64</title>
+						<author fullname="山本 桃歌" asciiFullname="Momoka Yamamoto">
+							<organization>The University of Tokyo/WIDE Project</organization>
+							<address>
+							<email>momoka.my6@gmail.com</email>
+							</address>
+						</author>
+						<author fullname="豊田 安信" asciiFullname="Yasunobu Toyota">
+							<organization>Keio University/WIDE Project</organization>
+							<address>
+							<email>yas-nyan@sfc.wide.ad.jp</email>
+							</address>
+						</author>
+						<date month="September" day="08" year="2023"/>
+					</front>
+					<seriesInfo name="Internet-Draft" value="draft-momoka-v6ops-ipv6-only-resolver-02"/>
+				</reference>
+			</references>
+			<references anchor="sec-informative-references">
+				<name>Informative References</name>
+				<reference anchor="V6DNSRDY-23" target="https://link.springer.com/chapter/10.1007/978-3-031-28486-1_22">
+					<front>
+						<title>How Ready is DNS for an IPv6-Only World?</title>
+						<author initials="F" surname="Streibelt" fullname="Florian">
+							<organization/>
+						</author>
+						<author initials="P" surname="Sattler" fullname="Patrick">
+							<organization/>
+						</author>
+						<author initials="F" surname="Lichtblau" fullname="Franziska">
+							<organization/>
+						</author>
+						<author initials="C" surname="Hernandez-Gañán" fullname="Carlos">
+							<organization/>
+						</author>
+						<author initials="O" surname="Gasser" fullname="Oliver">
+							<organization/>
+						</author>
+						<author initials="T" surname="Fiebig" fullname="Tobias">
+							<organization/>
+						</author>
+						<date month="March" year="2023"/>
+					</front>
+				</reference>
 			</references>
 		</references>
 	</back>
