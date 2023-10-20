@@ -174,7 +174,7 @@
 					The above misconfigurations are not mutually exclusive.
 				</t>
 				<t>
-					Furthermore, any of the misconfigurations above may also materialize not via a missing RR but via an RR providing the IP address of a nameserver that is not configured to answer queries via that IP version.
+					Furthermore, any of the misconfigurations above may also materialize not via a missing RR but via an RR providing the IP address of a nameserver that is not configured to answer queries via that IP version <xref target="V6DNSRDY-23" format="default"/>.
 				</t>
 			</section>
 			<section anchor="reasons-for-intentional-ip-version-related-name-space-fragmentation">
@@ -182,15 +182,17 @@
 				<t>
 					Intentional IP related name space fragmentation occurs if an operator consciously decides to not deploy IPv4 or IPv6 for a part of the resolution chain.
 					Most commonly, this is realized by consciously not listing A/AAAA records for NS names in and out of bailiwick, including missing GLUE.
+					At the time of writing, the share of zones not resolvable via IPv4 is negligible, while a little less than 40% of zones are not resolvable via IPv6 <xref target="V6DNSRDY-23" format="default"/>.
+					However, with progressing materialization of effects due to IPv4 exhaustion, this will change in the future.
 				</t>
 			</section>
 		</section>
 		<section anchor="policy-based-avoidance-of-name-space-fragmentation">
 			<name>Policy Based Avoidance of Name Space Fragmentation</name>
 			<t>
-				With the final exhaustion of IPv4 pools in RIRs and the progressing deployment of IPv6, there no longer is a "preferred" IP version.
-				Yet, while we now observe the first zones becoming exclusively IPv6 resolvable, we also still see a major portion of zones solely relying on legacy IP.
-				Hence, at the moment, dual stack connectivity is instrumental to be able to resolve zones.
+				With the final exhaustion of IPv4 pools in RIRs, e.g., <xref target="RIPEV4" format="default"/>, and the progressing deployment of IPv6, there no longer is a "preferred" IP version.
+				Yet, while we now observe the first zones becoming exclusively IPv6 resolvable, we also still see a major portion of zones solely relying on legacy IP <xref target="V6DNSRDY-23" format="default"/>.
+				Hence, at the moment, dual stack connectivity is instrumental to be able to resolve zones and avoid name space fragmentation.
 			</t>
 			<t>
 				Having zones served only by name servers reachable via one IP version would fragment the DNS.
@@ -202,49 +204,48 @@
 			<section anchor="guidelines-for-dns-zone-configuration">
 				<name>Guidelines for DNS Zone Configuration</name>
 				<t>
-					It is usually recommended that DNS zones contain at least two name servers, which are geographically diverse and operate under different routing policies.
-					To reduce the chance of dns name space fragmentation, it is <bcp14>RECOMMENDED</bcp14> that at least two NS for a zone are dual stack name servers.
-					Specitifcally, this means that the following minimal requirements hold:
+					It is usually recommended that DNS zones contain at least two name servers, which are geographically diverse and operate under different routing policies <xref target="IANANS" format="default"/>.
+					To reduce the chance of DNS name space fragmentation, it is <bcp14>RECOMMENDED</bcp14> that at least two NS for a zone are dual stack name servers.
+					Specifically, this means that the following minimal requirements <bcp14>SHOULD</bcp14> be implemented for a zone:
 				</t>
-				<ul spacing="normal">
-					<li>
-						<t>
+				<dl newline="true" spacing="normal">
+					<dt>
 							IPv4 adoption:
+					</dt>
+					<dd>
 							Every authoritative DNS zone <bcp14>SHOULD</bcp14> be served by at least one IPv4-reachable authoritative name server to maintain name space continuity.
 							The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) <bcp14>MUST</bcp14> not rely on IPv6 connectivity being available.
-							As we acknowledge IPv6 scarcity, operators MAY opt to not provide DNS services via IPv4, if they can ensure that all clients expected to resolve this zone do support DNS resolution via IPv6.
-						</t>
-					</li>
-					<li>
-						<t>
-							IPv6 Adoption:
+							As we acknowledge IPv4 scarcity, operators <bcp14>MAY</bcp14> opt to not provide DNS services via IPv4, if they can ensure that all clients expected to resolve this zone do support DNS resolution via IPv6.
+					</dd>
+					<dt>
+							IPv6 adoption:
+					</dt>
+					<dd>
 							Every authoritative DNS zone <bcp14>SHOULD</bcp14> be served by at least one IPv6-reachable authoritative name server to maintain name space continuity.
-							The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) <bcp14>MUST</bcp14> not rely on IPv6 connectivity being available.
-						</t>
-					</li>
-					<li>
-						<t>
+							The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) <bcp14>MUST</bcp14> not rely on IPv4 connectivity being available.
+					</dd>
+					<dt>
 							Consistency:
+					</dt>
+					<dd>
 							Both IPv4 and IPv6 transports should serve identical DNS data to ensure a consistent resolution experience across different network types.
-						</t>
-					</li>
-					<li>
-						<t>
-							Note: zone validation processes <bcp14>SHOULD</bcp14> ensure that there is at least one IPv4 address record and one IPv6 address record available for the name servers of any child delegations within the zone.
-						</t>
-					</li>
-				</ul>
+					</dd>
+				</dl>
+				<t>
+					Note: zone validation processes <bcp14>SHOULD</bcp14> ensure that there is at least one IPv4 address record and one IPv6 address record available for the name servers of any child delegations within the zone.
+				</t>
 			</section>
 			<section anchor="guidelines-for-dns-resolvers">
 				<name>Guidelines for DNS Resolvers</name>
 				<t>
-					Every iterative name server <bcp14>SHOULD</bcp14> be either IPv6-only with a transition mechanism for IPv4 reachability or dual stack.
+					Every iterative name server <bcp14>SHOULD</bcp14> be dual stack.
 				</t>
 				<t>
-					The zones a IPv6-only iterative resolvers can resolve are growing but as they cannot fully resolve all zones, the use of a transition mechanism is <bcp14>RECOMMENDED</bcp14> "cite other draft".
+					While the zones a IPv6-only iterative resolvers can resolve are growing but do not yet cover all thones, they cannot fully resolve all zones.
+					Hence, a recursive resolver <bcp14>MAY</bcp14> be IPv6-only, if it uses a transition mechanism for IPv4 reachability <xref target="draft-momoka-v6ops-ipv6-only-resolver-02" format="default"/> or use a configuration where such resolvers forward queries failing IPv6 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
 				</t>
 				<t>
-					Alternatively, in absence of a transition mechanism, IPv6 only resolvers MAY use a configuration where such resolvers forward queries failing IPv6 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
+					Similarly, a recursive resolver <bcp14>MAY</bcp14> be IPv4-only, if it use a configuration where such resolvers forward queries failing IPv4 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
 				</t>
 			</section>
 		</section>
@@ -260,7 +261,7 @@
 		<section anchor="iana-considerations">
 			<name>IANA Considerations</name>
 			<t>
-				This document does not require IANA actions.
+				This document asks IANA to update its technical requirements for authoritative name servers to require an IPv4 and an IPv6 address for each authoritative server <xref target="IANANS" format="default"/>.
 			</t>
 		</section>
 		<section numbered="false" anchor="acknowledgments">
@@ -327,6 +328,23 @@
 							<organization/>
 						</author>
 						<date month="March" year="2023"/>
+					</front>
+				</reference>
+				<reference anchor="RIPEV4" target="https://www.ripe.net/publications/news/about-ripe-ncc-and-ripe/the-ripe-ncc-has-run-out-of-ipv4-addresses">
+					<front>
+					<title>The RIPE NCC has run out of IPv4 Addresses</title>
+					<author>
+						<organization>RIPE NCC</organization>
+					</author>
+					<date month="November" year="2019"/>
+					</front>
+				</reference>
+				<reference anchor="IANANS" target="https://www.iana.org/help/nameserver-requirements">
+					<front>
+					<title>Technical requirements for authoritative name servers</title>
+					<author>
+						<organization>IANA</organization>
+					</author>
 					</front>
 				</reference>
 			</references>
