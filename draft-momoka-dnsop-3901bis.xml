@@ -242,6 +242,9 @@
 		<section anchor="security-considerations">
 			<name>Security Considerations</name>
 			<t>
+				TODO: This requires some input as, e.g., dual-stack services have implications for ratelimiting etc.
+			</t>
+			<t>
 				The guidelines described in this memo introduce no new security considerations into the DNS protocol or associated operational scenarios.
 			</t>
 		</section>
