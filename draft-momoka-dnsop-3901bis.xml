@@ -92,23 +92,26 @@
 				This document uses DNS terminology as described in <xref target="RFC8499" format="default"/>.
 				Furthermore, the following terms are used with a defined meaning:
 			</t>
-			<ul spacing="normal">
-				<li>
-					<t>
-						"IPv4 name server": This refers to a name server providing DNS services reachable via IPv4. It does not imply anything about what DNS data is served, but requires DNS queries to be received and answered over IPv4.
-					</t>
-				</li>
-				<li>
-					<t>
-						"IPv6 name server": This refers to a name server providing DNS services reachable via IPv6. It does not imply anything about what DNS data is served, but requires DNS queries to be received and answered over IPv6.
-					</t>
-				</li>
-				<li>
-					<t>
-						"dual-stack name server": A name server that is both an "IPv4 name server" and also an "IPv6 name server".
-					</t>
-				</li>
-			</ul>
+			<dl newline="true" spacing="normal">
+				<dt>
+					IPv4 name server:
+				</dt>
+				<dd>
+					This refers to a name server providing DNS services reachable via IPv4. It does not imply anything about what DNS data is served, but requires DNS queries to be received and answered over IPv4.
+				</dd>
+				<dt>
+					IPv6 name server:
+				</dt>
+				<dd>
+					This refers to a name server providing DNS services reachable via IPv6. It does not imply anything about what DNS data is served, but requires DNS queries to be received and answered over IPv6.
+				</dd>
+				<dt>
+					Dual-stack name server:
+				</dt>
+				<dd>
+					A name server that is both an "IPv4 name server" and also an "IPv6 name server".
+				</dd>
+			</dl>
 		</section>
 		<section anchor="name-space-fragmentation">
 			<name>Name Space Fragmentation</name>
@@ -134,33 +137,39 @@
 				<t>
 					The following name related misconfigurations can cause broken delegation for one IP version:
 				</t>
-				<ol spacing="normal" type="1">
-					<li>
-						<t>
-							No A/AAAA records for NS names: If none of the NS records for a zone in their parent zone have associated A or AAAA records, while holding the inverse record, resolution via the concerned IP version is not possible.
-						</t>
-					</li>
-					<li>
-						<t>
-							Missing GLUE: If the name from an NS record for a zone is in-bailiwick, i.e., the name is within the zone or below, a parent zone must contain an IPv4 and IPv6 GLUE record, i.e., a parent must serve the corresponding A or AAAA record(s) as ADDITIONAL data when returning the NS record in the ANSWER section.
-						</t>
-					</li>
-					<li>
-						<t>
-							No A/AAAA record for in-bailiwick NS : If an NS record of a zone points to a name that is in-bailiwick but the name lacks corresponding A or AAAA record(s) in its zone, resolution via the concerned IP version will fail even if the parent provides GLUE, when the recursive server validates the delegation path.
-						</t>
-					</li>
-					<li>
-						<t>
-							Zone of out-of-bailiwick NSes not resolving: If an NS record of a zone is out-of-bailiwick, the corresponding zone must be resolvable via the IP version in question as well. It is insufficient if the name pointed to by the NS record has an associated A or AAAA record correspondingly.
-						</t>
-					</li>
-					<li>
-						<t>
-							Parent zone not resolvable via one IP version: For a zone to be resolvable via an IP version the parent zones up to the root zone must be resolvable via that IP version as well. Any zone not resolvable via the concerned IP version breaks the delegation chain for all its children.
-						</t>
-					</li>
-				</ol>
+				<dl newline="true" spacing="normal">
+					<dt>
+						No A/AAAA records for NS names:
+					</dt>
+					<dd>
+						If none of the NS records for a zone in their parent zone have associated A or AAAA records, while holding the inverse record, resolution via the concerned IP version is not possible.
+					</dd>
+					<dt>
+						Missing GLUE:
+					</dt>
+					<dd>
+						If the name from an NS record for a zone is in-bailiwick, i.e., the name is within the zone or below, a parent zone must contain an IPv4 and IPv6 GLUE record, i.e., a parent must serve the corresponding A or AAAA record(s) as ADDITIONAL data when returning the NS record in the ANSWER section.
+					</dd>
+					<dt>
+						No A/AAAA record for in-bailiwick NS:
+					</dt>
+					<dd>
+						If an NS record of a zone points to a name that is in-bailiwick but the name lacks corresponding A or AAAA record(s) in its zone, resolution via the concerned IP version will fail even if the parent provides GLUE, when the recursive server validates the delegation path.
+					</dd>
+					<dt>
+						Zone of out-of-bailiwick NSes not resolving:
+					</dt>
+					<dd>
+						If an NS record of a zone is out-of-bailiwick, the corresponding zone must be resolvable via the IP version in question as well. It is insufficient if the name pointed to by the NS record has an associated A or AAAA record correspondingly.
+					</dd>
+					<dt>
+						Parent zone not resolvable via one IP version:
+					</dt>
+					<dd>
+						For a zone to be resolvable via an IP version the parent zones up to the root zone must be resolvable via that IP version as well. Any zone not resolvable via the concerned IP version breaks the delegation chain for all its children.
+					</dd>
+				</dl>
+
 				<t>
 					The above misconfigurations are not mutually exclusive.
 				</t>
@@ -172,7 +181,7 @@
 				<name>Reasons for Intentional IP Version Related Name Space Fragmentation</name>
 				<t>
 					Intentional IP related name space fragmentation occurs if an operator consciously decides to not deploy IPv4 or IPv6 for a part of the resolution chain.
-					Most commonly, this is realized by consciously implementing points 1-3 from the above list.
+					Most commonly, this is realized by consciously not listing A/AAAA records for NS names in and out of bailiwick, including missing GLUE.
 				</t>
 			</section>
 		</section>
