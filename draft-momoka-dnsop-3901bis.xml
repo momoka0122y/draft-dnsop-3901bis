@@ -194,23 +194,23 @@
 				<name>Guidelines for DNS Zone Configuration</name>
 				<t>
 					It is usually recommended that DNS zones contain at least two name servers, which are geographically diverse and operate under different routing policies.
-					To reduce the chance of dns name space fragmentation, it is RECOMMENDED that at least two NS for a zone are dual stack name servers.
+					To reduce the chance of dns name space fragmentation, it is <bcp14>RECOMMENDED</bcp14> that at least two NS for a zone are dual stack name servers.
 					Specitifcally, this means that the folowing minimal requirements hold:
 				</t>
 				<ul spacing="normal">
 					<li>
 						<t>
 							IPv4 adoption:
-							Every authoritative DNS zone SHOULD be served by at least one IPv4-reachable authoritative name server to maintain name space continuity.
-							The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) MUST not rely on IPv6 connectivity being available.
+							Every authoritative DNS zone <bcp14>SHOULD</bcp14> be served by at least one IPv4-reachable authoritative name server to maintain name space continuity.
+							The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) <bcp14>MUST</bcp14> not rely on IPv6 connectivity being available.
 							As we acknowledge IPv6 scarcity, operators MAY opt to not provide DNS services via IPv4, if they can ensure that all clients expected to resolve this zone do support DNS resolution via IPv6.
 						</t>
 					</li>
 					<li>
 						<t>
 							IPv6 Adoption:
-							Every authoritative DNS zone SHOULD be served by at least one IPv6-reachable authoritative name server to maintain name space continuity.
-							The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) MUST not rely on IPv6 connectivity being available.
+							Every authoritative DNS zone <bcp14>SHOULD</bcp14> be served by at least one IPv6-reachable authoritative name server to maintain name space continuity.
+							The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) <bcp14>MUST</bcp14> not rely on IPv6 connectivity being available.
 						</t>
 					</li>
 					<li>
@@ -221,7 +221,7 @@
 					</li>
 					<li>
 						<t>
-							Note: zone validation processes SHOULD ensure that there is at least one IPv4 address record and one IPv6 address record available for the name servers of any child delegations within the zone.
+							Note: zone validation processes <bcp14>SHOULD</bcp14> ensure that there is at least one IPv4 address record and one IPv6 address record available for the name servers of any child delegations within the zone.
 						</t>
 					</li>
 				</ul>
@@ -229,10 +229,10 @@
 			<section anchor="guidelines-for-dns-resolvers">
 				<name>Guidelines for DNS Resolvers</name>
 				<t>
-					Every iterative name server SHOULD be either IPv6-only with a transition mechanism for IPv4 reachability or dual stack.
+					Every iterative name server <bcp14>SHOULD</bcp14> be either IPv6-only with a transition mechanism for IPv4 reachability or dual stack.
 				</t>
 				<t>
-					The zones a IPv6-only iterative resolvers can resolve are growing but as they cannot fully resolve all zones, the use of a transition mechanism is RECOMMENDED "cite other draft".
+					The zones a IPv6-only iterative resolvers can resolve are growing but as they cannot fully resolve all zones, the use of a transition mechanism is <bcp14>RECOMMENDED</bcp14> "cite other draft".
 				</t>
 				<t>
 					Alternatively, in absence of a transition mechanism, IPv6 only resolvers MAY use a configuration where such resolvers forward queries failing IPv6 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
