@@ -58,7 +58,7 @@
 			</t>
 			<t>
 				This creates a complex landscape where authoritative name servers might be accessible only via specific network protocols.
-				At the same time, DNS resolvers may only be able to access the Internet via either IPv4 or IPv6. This poses a challenge for such resolvers, as they may encounter names for which queries have to be sent to authoritative name servers with which they do not share an IP version during the name resolution process.
+				At the same time, DNS resolvers may only be able to access the Internet via either IPv4 or IPv6. This poses a challenge for such resolvers, as they may encounter names for which queries must be directed to authoritative name servers with which they do not share an IP version during the name resolution process.
 			</t>
 			<t>In this document, we discuss:</t>
 			<ul spacing="normal">
@@ -66,7 +66,7 @@
 					<t>IP version related namespace fragmentation and best-practices for avoiding it.</t>
 				</li>
 				<li>
-					<t>Guidelines for configuring authorative name servers for zones.</t>
+					<t>Guidelines for configuring authoritative name servers for zones.</t>
 				</li>
 				<li>
 					<t>Guidelines for operating recursive DNS resolvers.</t>
@@ -204,7 +204,7 @@
 				<t>
 					It is usually recommended that DNS zones contain at least two name servers, which are geographically diverse and operate under different routing policies.
 					To reduce the chance of dns name space fragmentation, it is <bcp14>RECOMMENDED</bcp14> that at least two NS for a zone are dual stack name servers.
-					Specitifcally, this means that the folowing minimal requirements hold:
+					Specitifcally, this means that the following minimal requirements hold:
 				</t>
 				<ul spacing="normal">
 					<li>
