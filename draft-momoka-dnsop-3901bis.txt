@@ -4,9 +4,9 @@
 
 dnsop                                                          Momoka. Y
 Internet-Draft                      The University of Tokyo/WIDE Project
-Intended status: Informational                                 T. Fiebig
-Expires: 22 April 2024                                           MPI-INF
-                                                         20 October 2023
+Obsoletes: 3901 (if approved)                                  T. Fiebig
+Intended status: Informational                                   MPI-INF
+Expires: 22 April 2024                                   20 October 2023
 
 
                DNS IPv6 Transport Operational Guidelines
@@ -14,12 +14,16 @@ Expires: 22 April 2024                                           MPI-INF
 
 Abstract
 
-   This memo provides guidelines and documents Best Current Practice for
-   operating authoritative and recursive DNS servers given that queries
-   and responses are carried in a mixed environment of IPv4 and IPv6
-   networks.  It expands beyond [RFC3910] in so far that it now
-   considers the reality of progressing IPv4 exhaustion, which will make
-   IPv6-only resolvers necessary in the long-term.
+   This specification describes an optimized expression of the semantics
+   of the Hypertext This memo provides guidelines and documents Best
+   Current Practice for operating authoritative and recursive DNS
+   servers given that queries and responses are carried in a mixed
+   environment of IPv4 and IPv6 networks.  It expands beyond [RFC3910]
+   in so far that it now considers the reality of progressing IPv4
+   exhaustion, which will make IPv6-only resolvers necessary in the
+   long-term.
+
+   This document obsoletes RFC 3901. (if approved)
 
 Discussion Venues
 
