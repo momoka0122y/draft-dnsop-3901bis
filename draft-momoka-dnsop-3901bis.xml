@@ -123,7 +123,7 @@
                 If this occurs, the DNS has, effectively, fragmented based on the resolver's and authoritative's mismatching IP version support.
             </t>
             <t>
-                In a mixed IP Internet, fragmentation can occur for different reasons. One reason is that DNS zones are consistently configured to support only either IPv4 or IPv6. Another reason is due to misconfigurations that make a zone unresolvable by either IPv4 or IPv6-only resolvers. 
+                In a mixed IP Internet, fragmentation can occur for different reasons. One reason is that DNS zones are consistently configured to support only either IPv4 or IPv6. Another reason is due to misconfigurations that make a zone unresolvable by either IPv4 or IPv6-only resolvers.
                 The latter cases are often hard to identify, as the impact of misconfigurations for only one IP version (IPv4 or IPv6) may be hidden in a dual-stack setting.
                 In the worst case, a specific name may only be resolvable via dual-stack enabled resolvers.
             </t>
