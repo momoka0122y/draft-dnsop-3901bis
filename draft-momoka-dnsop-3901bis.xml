@@ -284,25 +284,6 @@
                 <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3910.xml"/>
                 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
                 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8499.xml"/>
-                <reference anchor="draft-momoka-v6ops-ipv6-only-resolver-02" target="https://datatracker.ietf.org/doc/draft-momoka-v6ops-ipv6-only-resolver/02/">
-                    <front>
-                        <title>IPv6-only Capable Resolvers Utilising NAT64</title>
-                        <author fullname="山本 桃歌" asciiFullname="Momoka Yamamoto">
-                            <organization>The University of Tokyo/WIDE Project</organization>
-                            <address>
-                            <email>momoka.my6@gmail.com</email>
-                            </address>
-                        </author>
-                        <author fullname="豊田 安信" asciiFullname="Yasunobu Toyota">
-                            <organization>Keio University/WIDE Project</organization>
-                            <address>
-                            <email>yas-nyan@sfc.wide.ad.jp</email>
-                            </address>
-                        </author>
-                        <date month="September" day="08" year="2023"/>
-                    </front>
-                    <seriesInfo name="Internet-Draft" value="draft-momoka-v6ops-ipv6-only-resolver-02"/>
-                </reference>
             </references>
             <references anchor="sec-informative-references">
                 <name>Informative References</name>
@@ -329,6 +310,25 @@
                         </author>
                         <date month="March" year="2023"/>
                     </front>
+                </reference>
+                <reference anchor="draft-momoka-v6ops-ipv6-only-resolver-02" target="https://datatracker.ietf.org/doc/draft-momoka-v6ops-ipv6-only-resolver/02/">
+                    <front>
+                        <title>IPv6-only Capable Resolvers Utilising NAT64</title>
+                        <author fullname="山本 桃歌" asciiFullname="Momoka Yamamoto">
+                            <organization>The University of Tokyo/WIDE Project</organization>
+                            <address>
+                            <email>momoka.my6@gmail.com</email>
+                            </address>
+                        </author>
+                        <author fullname="豊田 安信" asciiFullname="Yasunobu Toyota">
+                            <organization>Keio University/WIDE Project</organization>
+                            <address>
+                            <email>yas-nyan@sfc.wide.ad.jp</email>
+                            </address>
+                        </author>
+                        <date month="September" day="08" year="2023"/>
+                    </front>
+                    <seriesInfo name="Internet-Draft" value="draft-momoka-v6ops-ipv6-only-resolver-02"/>
                 </reference>
                 <reference anchor="RIPEV4" target="https://www.ripe.net/publications/news/about-ripe-ncc-and-ripe/the-ripe-ncc-has-run-out-of-ipv4-addresses">
                     <front>
