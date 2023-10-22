@@ -12,7 +12,7 @@
     <front>
         <title abbrev="3901bis">DNS IPv6 Transport Operational Guidelines</title>
         <seriesInfo name="Internet-Draft" value="draft-momoka-dnsop-3901bis-latest"/>
-        <author fullname="山本 桃歌" asciiFullname="Momoka Yamamoto">
+        <author fullname="山本 桃歌" asciiFullname="Momoka Yamamoto" initials="Momoka" surname="Y">
             <organization>The University of Tokyo/WIDE Project</organization>
             <address>
                 <email>momoka.my6@gmail.com</email>
@@ -38,8 +38,8 @@
         <keyword>IPv6</keyword>
         <abstract>
     <t>
-        This memo provides guidelines and documnets Best Current Practice for operating authoritative and recursive DNS servers given that queries and responses are carried in a mixed environment of IPv4 and IPv6 networks.
-        It expands beyond <xref target="RFC3910" format="default"/> in so far that it now considers the reality of progressing IPv4 exhaustion, which will make IPv6 only resolvers necessary in the long-term.
+        This memo provides guidelines and documents Best Current Practice for operating authoritative and recursive DNS servers given that queries and responses are carried in a mixed environment of IPv4 and IPv6 networks.
+        It expands beyond <xref target="RFC3910" format="default"/> in so far that it now considers the reality of progressing IPv4 exhaustion, which will make IPv6-only resolvers necessary in the long-term.
     </t>
         </abstract>
         <note removeInRFC="true">
@@ -53,12 +53,12 @@
         <section anchor="introduction">
             <name>Introduction</name>
             <t>
-                Despite IPv6 being first discussed in the mid 1990s <xref target="RFC1883" format="default"/>, consistent deployment thorughout the whole Internet has not yet been accomplished.
+                Despite IPv6 being first discussed in the mid 1990s <xref target="RFC1883" format="default"/>, consistent deployment throughout the whole Internet has not yet been accomplished.
                 Hence, today, the Internet is a mixture of IPv4, dual-stack (networks connected via both IP versions), and IPv6 networks.
             </t>
             <t>
                 This creates a complex landscape where authoritative name servers might be accessible only via specific network protocols <xref target="V6DNSRDY-23" format="default"/>.
-                At the same time, DNS resolvers may only be able to access the Internet via either IPv4 or IPv6. This poses a challenge for such resolvers, as they may encounter names for which queries must be directed to authoritative name servers with which they do not share an IP version during the name resolution process <xref target="draft-momoka-v6ops-ipv6-only-resolver-02" format="default"/>.
+                At the same time, DNS resolvers may only be able to access the Internet via either IPv4 or IPv6. This poses a challenge for such resolvers because they may encounter names for which queries must be directed to authoritative name servers with which they do not share an IP version during the name resolution process <xref target="draft-momoka-v6ops-ipv6-only-resolver-02" format="default"/>.
             </t>
             <t>In this document, we discuss:</t>
             <ul spacing="normal">
@@ -73,7 +73,7 @@
                 </li>
             </ul>
             <t>
-                While transitional technologies and dual-stack setups may mitigate some of the issues of DNS reolution in a mixed protocol-version Internet, making DNS data accessible over both IPv4 and IPv6 is the most robust and flexible approach, as it allows resolvers to reach the information they need without requiring intermediary translation or forwarding services which may introduce additional failure cases.
+                While transitional technologies and dual-stack setups may mitigate some of the issues of DNS resolution in a mixed protocol-version Internet, making DNS data accessible over both IPv4 and IPv6 is the most robust and flexible approach, as it allows resolvers to reach the information they need without requiring intermediary translation or forwarding services which may introduce additional failure cases.
             </t>
             <section anchor="requirements-language">
                 <name>Requirements Language</name>
@@ -123,7 +123,7 @@
                 If this occurs, the DNS has, effectively, fragmented based on the resolver's and authoritative's mismatching IP version support.
             </t>
             <t>
-                In a mixed IP Internet, this fragmentation can be due to DNS zones being consistently configured to only support either IPv4 or IPv6, or due to misconfigurations leading to a situation where a zone is not resolvable by either IPv4 or IPv6 only resolvers due to a misconfiguration.
+                In a mixed IP Internet, fragmentation can occur for different reasons. One reason is that DNS zones are consistently configured to support only either IPv4 or IPv6. Another reason is due to misconfigurations that make a zone unresolvable by either IPv4 or IPv6-only resolvers. 
                 The latter cases are often hard to identify, as the impact of misconfigurations for only one IP version (IPv4 or IPv6) may be hidden in a dual-stack setting.
                 In the worst case, a specific name may only be resolvable via dual-stack enabled resolvers.
             </t>
@@ -174,7 +174,7 @@
                     The above misconfigurations are not mutually exclusive.
                 </t>
                 <t>
-                    Furthermore, any of the misconfigurations above may also materialize not via a missing RR but via an RR providing the IP address of a nameserver that is not configured to answer queries via that IP version <xref target="V6DNSRDY-23" format="default"/>.
+                    Furthermore, any of the misconfigurations above may also materialize not via a missing Resource Record (RR) but via an RR providing the IP address of a nameserver that is not configured to answer queries via that IP version <xref target="V6DNSRDY-23" format="default"/>.
                 </t>
             </section>
             <section anchor="reasons-for-intentional-ip-version-related-name-space-fragmentation">
@@ -183,7 +183,7 @@
                     Intentional IP related name space fragmentation occurs if an operator consciously decides to not deploy IPv4 or IPv6 for a part of the resolution chain.
                     Most commonly, this is realized by consciously not listing A/AAAA records for NS names in and out of bailiwick, including missing GLUE.
                     At the time of writing, the share of zones not resolvable via IPv4 is negligible, while a little less than 40% of zones are not resolvable via IPv6 <xref target="V6DNSRDY-23" format="default"/>.
-                    However, with progressing materialization of effects due to IPv4 exhaustion, this will change in the future.
+                    However, as IPv4 exhaustion becomes more critical, this will change in the future
                 </t>
             </section>
         </section>
@@ -241,7 +241,7 @@
                     Every iterative name server <bcp14>SHOULD</bcp14> be dual stack.
                 </t>
                 <t>
-                    While the zones a IPv6-only iterative resolvers can resolve are growing but do not yet cover all thones, they cannot fully resolve all zones.
+                    While the zones that IPv6-only iterative resolvers can resolve are growing but do not yet cover all zones, they cannot fully resolve all zones.
                     Hence, a recursive resolver <bcp14>MAY</bcp14> be IPv6-only, if it uses a transition mechanism for IPv4 reachability <xref target="draft-momoka-v6ops-ipv6-only-resolver-02" format="default"/> or use a configuration where such resolvers forward queries failing IPv6 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
                 </t>
                 <t>
@@ -284,25 +284,6 @@
                 <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3910.xml"/>
                 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
                 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8499.xml"/>
-                <reference anchor="draft-momoka-v6ops-ipv6-only-resolver-02" target="https://datatracker.ietf.org/doc/draft-momoka-v6ops-ipv6-only-resolver/02/">
-                    <front>
-                        <title>IPv6-only Capable Resolvers Utilising NAT64</title>
-                        <author fullname="山本 桃歌" asciiFullname="Momoka Yamamoto">
-                            <organization>The University of Tokyo/WIDE Project</organization>
-                            <address>
-                            <email>momoka.my6@gmail.com</email>
-                            </address>
-                        </author>
-                        <author fullname="豊田 安信" asciiFullname="Yasunobu Toyota">
-                            <organization>Keio University/WIDE Project</organization>
-                            <address>
-                            <email>yas-nyan@sfc.wide.ad.jp</email>
-                            </address>
-                        </author>
-                        <date month="September" day="08" year="2023"/>
-                    </front>
-                    <seriesInfo name="Internet-Draft" value="draft-momoka-v6ops-ipv6-only-resolver-02"/>
-                </reference>
             </references>
             <references anchor="sec-informative-references">
                 <name>Informative References</name>
@@ -329,6 +310,25 @@
                         </author>
                         <date month="March" year="2023"/>
                     </front>
+                </reference>
+                <reference anchor="draft-momoka-v6ops-ipv6-only-resolver-02" target="https://datatracker.ietf.org/doc/draft-momoka-v6ops-ipv6-only-resolver/02/">
+                    <front>
+                        <title>IPv6-only Capable Resolvers Utilising NAT64</title>
+                        <author fullname="山本 桃歌" asciiFullname="Momoka Yamamoto">
+                            <organization>The University of Tokyo/WIDE Project</organization>
+                            <address>
+                            <email>momoka.my6@gmail.com</email>
+                            </address>
+                        </author>
+                        <author fullname="豊田 安信" asciiFullname="Yasunobu Toyota">
+                            <organization>Keio University/WIDE Project</organization>
+                            <address>
+                            <email>yas-nyan@sfc.wide.ad.jp</email>
+                            </address>
+                        </author>
+                        <date month="September" day="08" year="2023"/>
+                    </front>
+                    <seriesInfo name="Internet-Draft" value="draft-momoka-v6ops-ipv6-only-resolver-02"/>
                 </reference>
                 <reference anchor="RIPEV4" target="https://www.ripe.net/publications/news/about-ripe-ncc-and-ripe/the-ripe-ncc-has-run-out-of-ipv4-addresses">
                     <front>
