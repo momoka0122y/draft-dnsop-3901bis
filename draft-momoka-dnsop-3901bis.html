@@ -6,10 +6,12 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>DNS IPv6 Transport Operational Guidelines</title>
 <meta content="山本 桃歌 (Momoka Yamamoto)" name="author">
+<meta content="Tobias Fiebig" name="author">
 <meta content="
-       This memo provides guidelines and Best Current Practice for operating
-DNS in a world where queries and responses are carried in a mixed
-environment of IPv4 and IPv6 networks. 
+       
+        This memo provides guidelines and documnets Best Current Practice for operating authoritative and recursive DNS servers given that queries and responses are carried in a mixed environment of IPv4 and IPv6 networks.
+        It expands beyond   in so far that it now considers the reality of progressing IPv4 exhaustion, which will make IPv6 only resolvers necessary in the long-term.
+       
     " name="description">
 <meta content="xml2rfc 3.18.2" name="generator">
 <meta content="DNS" name="keyword">
@@ -1031,8 +1033,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <td class="right">October 2023</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Yamamoto</td>
-<td class="center">Expires 21 April 2024</td>
+<td class="left">Yamamoto &amp; Fiebig</td>
+<td class="center">Expires 22 April 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1045,18 +1047,22 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-momoka-dnsop-3901bis-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-10-19" class="published">19 October 2023</time>
+<time datetime="2023-10-20" class="published">20 October 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-04-21">21 April 2024</time></dd>
-<dt class="label-authors">Author:</dt>
+<dd class="expires"><time datetime="2024-04-22">22 April 2024</time></dd>
+<dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
       <div class="author-name">
 <span class="non-ascii">山本 桃歌</span> (<span class="ascii">M. Yamamoto</span>)</div>
 <div class="org">The University of Tokyo/WIDE Project</div>
+</div>
+<div class="author">
+      <div class="author-name">T. Fiebig</div>
+<div class="org">MPI-INF</div>
 </div>
 </dd>
 </dl>
@@ -1064,9 +1070,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">DNS IPv6 Transport Operational Guidelines</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This memo provides guidelines and Best Current Practice for operating
-DNS in a world where queries and responses are carried in a mixed
-environment of IPv4 and IPv6 networks.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">
+        This memo provides guidelines and documnets Best Current Practice for operating authoritative and recursive DNS servers given that queries and responses are carried in a mixed environment of IPv4 and IPv6 networks.
+        It expands beyond <span>[<a href="#RFC3910" class="cite xref">RFC3910</a>]</span> in so far that it now considers the reality of progressing IPv4 exhaustion, which will make IPv6 only resolvers necessary in the long-term.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1074,7 +1080,7 @@ environment of IPv4 and IPv6 networks.<a href="#section-abstract-1" class="pilcr
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">Source for this draft and an issue tracker can be found at
-    <span><a href="https://github.com/momoka0122y/draft-dnsop-3901bis">https://github.com/momoka0122y/draft-dnsop-3901bis</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+        <span><a href="https://github.com/momoka0122y/draft-dnsop-3901bis">https://github.com/momoka0122y/draft-dnsop-3901bis</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1095,7 +1101,7 @@ environment of IPv4 and IPv6 networks.<a href="#section-abstract-1" class="pilcr
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 21 April 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 22 April 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1126,23 +1132,31 @@ environment of IPv4 and IPv6 networks.<a href="#section-abstract-1" class="pilcr
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-requirements-language" class="internal xref">Requirements Language</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-name-space-fragmentation-fo" class="internal xref">Name Space Fragmentation: following the referral chain</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-name-space-fragmentation" class="internal xref">Name Space Fragmentation</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-misconfigurations-causing-i" class="internal xref">Misconfigurations Causing IP Version Related Name Space Fragmentation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-reasons-for-intentional-ip-" class="internal xref">Reasons for Intentional IP Version Related Name Space Fragmentation</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-policy-based-avoidance-of-n" class="internal xref">Policy Based Avoidance of Name Space Fragmentation</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
-                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-guidelines-for-authoritativ" class="internal xref">Guidelines for Authoritative Name Servers</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.1">
-                    <p id="section-toc.1-1.4.2.1.2.1.1"><a href="#section-4.1.1" class="auto internal xref">4.1.1</a>.  <a href="#name-reasons-for-broken-ipv6-del" class="internal xref">Reasons for Broken IPv6 Delegation</a></p>
-</li>
-                </ul>
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-guidelines-for-dns-zone-con" class="internal xref">Guidelines for DNS Zone Configuration</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
                 <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-guidelines-for-dns-resolver" class="internal xref">Guidelines for DNS Resolvers</a></p>
@@ -1170,7 +1184,7 @@ environment of IPv4 and IPv6 networks.<a href="#section-abstract-1" class="pilcr
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1181,15 +1195,39 @@ environment of IPv4 and IPv6 networks.<a href="#section-abstract-1" class="pilcr
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Today, the Internet is a mixture of IPv4 and IPv6 networks. This creates a
-complex landscape where authoritative name servers might be accessible only
-via specific network protocols. This poses a challenge for resolvers that
-are limited to using either IPv4 or IPv6, as they might encounter
-unreachable servers during the name resolution process.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">Ideally, making DNS
-data accessible over both IPv4 and IPv6 is the most robust and flexible
-approach, as it allows resolvers to reach the information they need without
-requiring intermediary translation or forwarding services.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-1">
+                Despite IPv6 being first discussed in the mid 1990s <span>[<a href="#RFC1883" class="cite xref">RFC1883</a>]</span>, consistent deployment thorughout the whole Internet has not yet been accomplished.
+                Hence, today, the Internet is a mixture of IPv4, dual-stack (networks connected via both IP versions), and IPv6 networks.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">
+                This creates a complex landscape where authoritative name servers might be accessible only via specific network protocols <span>[<a href="#V6DNSRDY-23" class="cite xref">V6DNSRDY-23</a>]</span>.
+                At the same time, DNS resolvers may only be able to access the Internet via either IPv4 or IPv6. This poses a challenge for such resolvers, as they may encounter names for which queries must be directed to authoritative name servers with which they do not share an IP version during the name resolution process <span>[<a href="#draft-momoka-v6ops-ipv6-only-resolver-02" class="cite xref">draft-momoka-v6ops-ipv6-only-resolver-02</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">In this document, we discuss:<a href="#section-1-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-4.1">
+          <p id="section-1-4.1.1">IP version related namespace fragmentation and best-practices for avoiding it.<a href="#section-1-4.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-4.2">
+          <p id="section-1-4.2.1">Guidelines for configuring authoritative name servers for zones.<a href="#section-1-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-4.3">
+          <p id="section-1-4.3.1">Guidelines for operating recursive DNS resolvers.<a href="#section-1-4.3.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-1-5">
+                While transitional technologies and dual-stack setups may mitigate some of the issues of DNS reolution in a mixed protocol-version Internet, making DNS data accessible over both IPv4 and IPv6 is the most robust and flexible approach, as it allows resolvers to reach the information they need without requiring intermediary translation or forwarding services which may introduce additional failure cases.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<div id="requirements-language">
+<section id="section-1.1">
+        <h3 id="name-requirements-language">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-requirements-language" class="section-name selfRef">Requirements Language</a>
+        </h3>
+<p id="section-1.1-1">
+                    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+                    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+                    "OPTIONAL" in this document are to be interpreted as described in BCP
+                    14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they appear in all
+                    capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="terminology">
@@ -1197,47 +1235,114 @@ requiring intermediary translation or forwarding services.<a href="#section-1-2"
       <h2 id="name-terminology">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
       </h2>
-<p id="section-2-1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-"OPTIONAL" in this document are to be interpreted as described in BCP
-14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they appear in all
-capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">DNS terminology is as described in <span>[<a href="#RFC8499" class="cite xref">RFC8499</a>]</span>.<a href="#section-2-2" class="pilcrow">¶</a></p>
-<p id="section-2-3">The phrase "IPv4 name server" indicates a name server available over
-IPv4 transport.  It does not imply anything about what DNS  data is
-served.  Likewise, "IPv6 name server" indicates a name server
-available over IPv6 transport.  The phrase "dual-stack name server"
-indicates a name server that is actually configured to run both
-protocols, IPv4 and IPv6, and not merely a server running on a
-system capable of running both but actually configured to run only
-one.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-1">
+                This document uses DNS terminology as described in <span>[<a href="#RFC8499" class="cite xref">RFC8499</a>]</span>.
+                Furthermore, the following terms are used with a defined meaning:<a href="#section-2-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlNewline" id="section-2-2">
+        <dt id="section-2-2.1">
+                    IPv4 name server:
+        </dt>
+        <dd style="margin-left: 1.5em" id="section-2-2.2">
+                    This refers to a name server providing DNS services reachable via IPv4. It does not imply anything about what DNS data is served, but requires DNS queries to be received and answered over IPv4.<a href="#section-2-2.2" class="pilcrow">¶</a>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-2.3">
+                    IPv6 name server:
+        </dt>
+        <dd style="margin-left: 1.5em" id="section-2-2.4">
+                    This refers to a name server providing DNS services reachable via IPv6. It does not imply anything about what DNS data is served, but requires DNS queries to be received and answered over IPv6.<a href="#section-2-2.4" class="pilcrow">¶</a>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-2.5">
+                    Dual-stack name server:
+        </dt>
+        <dd style="margin-left: 1.5em" id="section-2-2.6">
+                    A name server that is both an "IPv4 name server" and also an "IPv6 name server".<a href="#section-2-2.6" class="pilcrow">¶</a>
+</dd>
+      <dd class="break"></dd>
+</dl>
 </section>
 </div>
-<div id="name-space-fragmentation-following-the-referral-chain">
+<div id="name-space-fragmentation">
 <section id="section-3">
-      <h2 id="name-name-space-fragmentation-fo">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-name-space-fragmentation-fo" class="section-name selfRef">Name Space Fragmentation: following the referral chain</a>
+      <h2 id="name-name-space-fragmentation">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-name-space-fragmentation" class="section-name selfRef">Name Space Fragmentation</a>
       </h2>
-<p id="section-3-1">A resolver that tries to look up a name starts out at the root, and
-follows referrals until it is referred to a name server that is
-authoritative for the name.  If somewhere down the chain of referrals
-it is referred to a name server that is only accessible over a
-transport which the resolver cannot use, the resolver is unable to
-finish the task.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">With all DNS data only available over IPv4 transport everything is
-simple.  IPv4 resolvers can use the intended mechanism of following
-referrals from the root and down while IPv6 resolvers have to work
-through a "translator", i.e., they have to use a recursive name
-server on a so-called "dual stack" host as a "forwarder" since they
-cannot access the DNS data directly.<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">With all DNS data only available over IPv6 transport everything would
-be equally simple, with the exception of IPv4 recursive name servers
-having to switch to a forwarding configuration.<a href="#section-3-3" class="pilcrow">¶</a></p>
-<p id="section-3-4">The transition from IPv4 only to a mixture of IPv4 and IPv6, with
-three categories of DNS data depending on whether the information is
-available only over IPv4 transport, only over IPv6 or both.<a href="#section-3-4" class="pilcrow">¶</a></p>
-<p id="section-3-5">Having DNS data available on both transports is the optimal
-situation.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-1">
+                A resolver that tries to look up a name starts out at the root, and follows referrals until it is referred to a name server that is authoritative for the name.
+                If somewhere down the chain of referrals it is referred to a name server that is, based on the referral, only accessible over a transport which the resolver cannot use, the resolver is unable to continue DNS resolution.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">
+                If this occurs, the DNS has, effectively, fragmented based on the resolver's and authoritative's mismatching IP version support.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">
+                In a mixed IP Internet, this fragmentation can be due to DNS zones being consistently configured to only support either IPv4 or IPv6, or due to misconfigurations leading to a situation where a zone is not resolvable by either IPv4 or IPv6 only resolvers due to a misconfiguration.
+                The latter cases are often hard to identify, as the impact of misconfigurations for only one IP version (IPv4 or IPv6) may be hidden in a dual-stack setting.
+                In the worst case, a specific name may only be resolvable via dual-stack enabled resolvers.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<div id="misconfigurations-causing-ip-version-related-name-space-fragmentation">
+<section id="section-3.1">
+        <h3 id="name-misconfigurations-causing-i">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-misconfigurations-causing-i" class="section-name selfRef">Misconfigurations Causing IP Version Related Name Space Fragmentation</a>
+        </h3>
+<p id="section-3.1-1">
+                    Even when an administrator thinks they have enabled support for a specific IP version on their authoritative name server, various misconfigurations may break the DNS delegation chain of a zone for that protocol and prevent any of its records from resolving for clients only supporting that IP version.
+                    These misconfigurations can be kept hidden if most clients can successfully fall back to the other IP version.
+                    As such, these issues are more common for IPv6 resolution related name space fragmentation.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">
+                    The following name related misconfigurations can cause broken delegation for one IP version:<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlNewline" id="section-3.1-3">
+          <dt id="section-3.1-3.1">
+                        No A/AAAA records for NS names:
+          </dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-3.2">
+                        If none of the NS records for a zone in their parent zone have associated A or AAAA records, while holding the inverse record, resolution via the concerned IP version is not possible.<a href="#section-3.1-3.2" class="pilcrow">¶</a>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.1-3.3">
+                        Missing GLUE:
+          </dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-3.4">
+                        If the name from an NS record for a zone is in-bailiwick, i.e., the name is within the zone or below, a parent zone must contain an IPv4 and IPv6 GLUE record, i.e., a parent must serve the corresponding A or AAAA record(s) as ADDITIONAL data when returning the NS record in the ANSWER section.<a href="#section-3.1-3.4" class="pilcrow">¶</a>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.1-3.5">
+                        No A/AAAA record for in-bailiwick NS:
+          </dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-3.6">
+                        If an NS record of a zone points to a name that is in-bailiwick but the name lacks corresponding A or AAAA record(s) in its zone, resolution via the concerned IP version will fail even if the parent provides GLUE, when the recursive server validates the delegation path.<a href="#section-3.1-3.6" class="pilcrow">¶</a>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.1-3.7">
+                        Zone of out-of-bailiwick NSes not resolving:
+          </dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-3.8">
+                        If an NS record of a zone is out-of-bailiwick, the corresponding zone must be resolvable via the IP version in question as well. It is insufficient if the name pointed to by the NS record has an associated A or AAAA record correspondingly.<a href="#section-3.1-3.8" class="pilcrow">¶</a>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.1-3.9">
+                        Parent zone not resolvable via one IP version:
+          </dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-3.10">
+                        For a zone to be resolvable via an IP version the parent zones up to the root zone must be resolvable via that IP version as well. Any zone not resolvable via the concerned IP version breaks the delegation chain for all its children.<a href="#section-3.1-3.10" class="pilcrow">¶</a>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<p id="section-3.1-4">
+                    The above misconfigurations are not mutually exclusive.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-5">
+                    Furthermore, any of the misconfigurations above may also materialize not via a missing RR but via an RR providing the IP address of a nameserver that is not configured to answer queries via that IP version <span>[<a href="#V6DNSRDY-23" class="cite xref">V6DNSRDY-23</a>]</span>.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="reasons-for-intentional-ip-version-related-name-space-fragmentation">
+<section id="section-3.2">
+        <h3 id="name-reasons-for-intentional-ip-">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-reasons-for-intentional-ip-" class="section-name selfRef">Reasons for Intentional IP Version Related Name Space Fragmentation</a>
+        </h3>
+<p id="section-3.2-1">
+                    Intentional IP related name space fragmentation occurs if an operator consciously decides to not deploy IPv4 or IPv6 for a part of the resolution chain.
+                    Most commonly, this is realized by consciously not listing A/AAAA records for NS names in and out of bailiwick, including missing GLUE.
+                    At the time of writing, the share of zones not resolvable via IPv4 is negligible, while a little less than 40% of zones are not resolvable via IPv6 <span>[<a href="#V6DNSRDY-23" class="cite xref">V6DNSRDY-23</a>]</span>.
+                    However, with progressing materialization of effects due to IPv4 exhaustion, this will change in the future.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="policy-based-avoidance-of-name-space-fragmentation">
@@ -1245,46 +1350,52 @@ situation.<a href="#section-3-5" class="pilcrow">¶</a></p>
       <h2 id="name-policy-based-avoidance-of-n">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-policy-based-avoidance-of-n" class="section-name selfRef">Policy Based Avoidance of Name Space Fragmentation</a>
       </h2>
-<p id="section-4-1">Today there are a lot DNS "zones" on the public Internet that
-are available over IPv6 transport, and the numbers are growing year by year.
-However, there are still a lot of "zones" that are not yet IPv6 capable so
-resolvers still need IPv4 connectivity to resolve all domain names.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<p id="section-4-2">Having zones served only by IPv6-only name server would not be
-a good development either, since this will fragment the previously
-unfragmented IPv4 name space and there are strong reasons to find a
-mechanism to avoid it.<a href="#section-4-2" class="pilcrow">¶</a></p>
-<p id="section-4-3">The recommended approach to maintain name space continuity is to use
-administrative policies, as described in the next section.<a href="#section-4-3" class="pilcrow">¶</a></p>
-<div id="guidelines-for-authoritative-name-servers">
+<p id="section-4-1">
+                With the final exhaustion of IPv4 pools in RIRs, e.g., <span>[<a href="#RIPEV4" class="cite xref">RIPEV4</a>]</span>, and the progressing deployment of IPv6, there no longer is a "preferred" IP version.
+                Yet, while we now observe the first zones becoming exclusively IPv6 resolvable, we also still see a major portion of zones solely relying on legacy IP <span>[<a href="#V6DNSRDY-23" class="cite xref">V6DNSRDY-23</a>]</span>.
+                Hence, at the moment, dual stack connectivity is instrumental to be able to resolve zones and avoid name space fragmentation.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">
+                Having zones served only by name servers reachable via one IP version would fragment the DNS.
+                Hence, we need to find a way to avoid this fragmentation.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">
+                The recommended approach to maintain name space continuity is to use administrative policies, as described in this section.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<div id="guidelines-for-dns-zone-configuration">
 <section id="section-4.1">
-        <h3 id="name-guidelines-for-authoritativ">
-<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-guidelines-for-authoritativ" class="section-name selfRef">Guidelines for Authoritative Name Servers</a>
+        <h3 id="name-guidelines-for-dns-zone-con">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-guidelines-for-dns-zone-con" class="section-name selfRef">Guidelines for DNS Zone Configuration</a>
         </h3>
-<p id="section-4.1-1">IPv4 adoption:
-Every authoritative DNS zone SHOULD be served by at least one IPv4-reachable authoritative name server to maintain name space continuity.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1-2">IPv6 Adoption:
-Authoritative name servers SHOULD aim to be accessible via IPv6 to ensure service reliability for IPv6-only resolvers.
-It is recognized that some networks have not yet adopted IPv6 connectivity, making this a challenging guideline to implement universally. However, for networks that do have IPv6 capability but have not yet configured their authoritative name servers to run on IPv6, it is recommended to do so to prevent any disruption in services for IPv6-only resolvers.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
-<p id="section-4.1-3">Consistency:
-Both IPv4 and IPv6 transports should serve identical DNS data to ensure a consistent resolution experience across different network types.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
-<p id="section-4.1-4">Note: zone validation processes SHOULD ensure that there is at least
-one IPv4 address record available for the name servers of any child
-delegations within the zone.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
-<div id="reasons-for-broken-ipv6-delegation">
-<section id="section-4.1.1">
-          <h4 id="name-reasons-for-broken-ipv6-del">
-<a href="#section-4.1.1" class="section-number selfRef">4.1.1. </a><a href="#name-reasons-for-broken-ipv6-del" class="section-name selfRef">Reasons for Broken IPv6 Delegation</a>
-          </h4>
-<p id="section-4.1.1-1">Even when an administrator thinks they have enabled IPv6 on their authoritative name server misconfiguration specific to IPv6 may break the DNS delegation chain of a zone and prevent any of its records from resolving in an IPv6-only scenario. These misconfigurations can be kept for a long time as resolvers can fallback to IPv4.<a href="#section-4.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-2">The following misconfigurations can cause broken IPv6-delegation in an IPv6-only setting:<a href="#section-4.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-3">No AAAA records for NS names: If none of the NS records for a zone in their parent zone have associated AAAA records, resolution via IPv6 is not possible.<a href="#section-4.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-4">Missing GLUE: If the name from an NS record for a zone is in-bailiwick, i.e., the name is within the zone or below, a parent zone must contain an IPv6 GLUE record, i.e., a parent must serve the corresponding AAAA record(s) as ADDITIONAL data when returning the NS record in the ANSWER section.<a href="#section-4.1.1-4" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-5">No AAAA record for in-bailiwick NS : If an NS record of a zone points to a name that is in-bailiwick but the name lacks AAAA record(s) in its zone, IPv6-only resolution will fail even if the parent provides GLUE, when the recursive server validates the delegation path. One such example is Unbound with the setting harden-glue: yes–the default.<a href="#section-4.1.1-5" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-6">Zone of out-of-bailiwick NS es not resolving: If an NS record of a zone is out-of-bailiwick, the corresponding zone must be IPv6-resolvable as well. It is insufficient if the name pointed to by the NS record has an associated AAAA record.<a href="#section-4.1.1-6" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-7">Parent zone not IPv6-resolvable: For a zone to be resolvable via IPv6 the parent zones up to the root zone must be IPv6-resolvable. Any non-IPv6-resolvable zone breaks the delegation chain for all its children.<a href="#section-4.1.1-7" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-8">The above misconfigurations are not mutually exclusive.<a href="#section-4.1.1-8" class="pilcrow">¶</a></p>
-</section>
-</div>
+<p id="section-4.1-1">
+                    It is usually recommended that DNS zones contain at least two name servers, which are geographically diverse and operate under different routing policies <span>[<a href="#IANANS" class="cite xref">IANANS</a>]</span>.
+                    To reduce the chance of DNS name space fragmentation, it is <span class="bcp14">RECOMMENDED</span> that at least two NS for a zone are dual stack name servers.
+                    Specifically, this means that the following minimal requirements <span class="bcp14">SHOULD</span> be implemented for a zone:<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlNewline" id="section-4.1-2">
+          <dt id="section-4.1-2.1">
+                            IPv4 adoption:
+          </dt>
+          <dd style="margin-left: 1.5em" id="section-4.1-2.2">
+                            Every authoritative DNS zone <span class="bcp14">SHOULD</span> be served by at least one IPv4-reachable authoritative name server to maintain name space continuity.
+                            The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) <span class="bcp14">MUST</span> not rely on IPv6 connectivity being available.
+                            As we acknowledge IPv4 scarcity, operators <span class="bcp14">MAY</span> opt to not provide DNS services via IPv4, if they can ensure that all clients expected to resolve this zone do support DNS resolution via IPv6.<a href="#section-4.1-2.2" class="pilcrow">¶</a>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.1-2.3">
+                            IPv6 adoption:
+          </dt>
+          <dd style="margin-left: 1.5em" id="section-4.1-2.4">
+                            Every authoritative DNS zone <span class="bcp14">SHOULD</span> be served by at least one IPv6-reachable authoritative name server to maintain name space continuity.
+                            The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) <span class="bcp14">MUST</span> not rely on IPv4 connectivity being available.<a href="#section-4.1-2.4" class="pilcrow">¶</a>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-4.1-2.5">
+                            Consistency:
+          </dt>
+          <dd style="margin-left: 1.5em" id="section-4.1-2.6">
+                            Both IPv4 and IPv6 transports should serve identical DNS data to ensure a consistent resolution experience across different network types.<a href="#section-4.1-2.6" class="pilcrow">¶</a>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<p id="section-4.1-3">
+                    Note: zone validation processes <span class="bcp14">SHOULD</span> ensure that there is at least one IPv4 address record and one IPv6 address record available for the name servers of any child delegations within the zone.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="guidelines-for-dns-resolvers">
@@ -1292,9 +1403,13 @@ delegations within the zone.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
         <h3 id="name-guidelines-for-dns-resolver">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-guidelines-for-dns-resolver" class="section-name selfRef">Guidelines for DNS Resolvers</a>
         </h3>
-<p id="section-4.2-1">Every iterative name server SHOULD be either IPv4-only or dual stack.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2-2">The zones a IPv6-only iterative resolvers can resolve are growing but as they cannot fully resolve all zones, they are not advisable at the moment.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.2-3">While IPv6-only iterative resolvers are not recommended, configurations may be designed where such resolvers forward queries to a set of dual-stack recursive name servers that perform the actual recursive queries.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">
+                    Every iterative name server <span class="bcp14">SHOULD</span> be dual stack.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-2">
+                    While the zones a IPv6-only iterative resolvers can resolve are growing but do not yet cover all thones, they cannot fully resolve all zones.
+                    Hence, a recursive resolver <span class="bcp14">MAY</span> be IPv6-only, if it uses a transition mechanism for IPv4 reachability <span>[<a href="#draft-momoka-v6ops-ipv6-only-resolver-02" class="cite xref">draft-momoka-v6ops-ipv6-only-resolver-02</a>]</span> or use a configuration where such resolvers forward queries failing IPv6 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.2-3">
+                    Similarly, a recursive resolver <span class="bcp14">MAY</span> be IPv4-only, if it use a configuration where such resolvers forward queries failing IPv4 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1304,9 +1419,10 @@ delegations within the zone.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
       <h2 id="name-security-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-5-1">The guidelines described in this memo introduce no new security
-considerations into the DNS protocol or associated operational
-scenarios.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">
+                TODO: This requires some input as, e.g., dual-stack services have implications for ratelimiting etc.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">
+                The guidelines described in this memo introduce no new security considerations into the DNS protocol or associated operational scenarios.<a href="#section-5-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1314,7 +1430,8 @@ scenarios.<a href="#section-5-1" class="pilcrow">¶</a></p>
       <h2 id="name-iana-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-6-1">This document has no IANA actions.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">
+                This document asks IANA to update its technical requirements for authoritative name servers to require an IPv4 and an IPv6 address for each authoritative server <span>[<a href="#IANANS" class="cite xref">IANANS</a>]</span>.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="acknowledgments">
@@ -1322,8 +1439,10 @@ scenarios.<a href="#section-5-1" class="pilcrow">¶</a></p>
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="section-7-1">TODO: acknowledge people.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">Thank you for reading this draft.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-1">
+                TODO: acknowledge people.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">
+                Thank you for reading this draft.<a href="#section-7-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <section id="section-8">
@@ -1336,9 +1455,29 @@ scenarios.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="draft-momoka-v6ops-ipv6-only-resolver-02">[draft-momoka-v6ops-ipv6-only-resolver-02]</dt>
+        <dd>
+<span class="refAuthor"><span class="non-ascii">山本 桃歌</span> (<span class="ascii">Yamamoto, M.</span>)</span> and <span class="refAuthor"><span class="non-ascii">豊田 安信</span> (<span class="ascii">Y. Toyota</span>)</span>, <span class="refTitle">"IPv6-only Capable Resolvers Utilising NAT64"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-momoka-v6ops-ipv6-only-resolver-02</span>, <time datetime="2023-09-08" class="refDate">8 September 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-momoka-v6ops-ipv6-only-resolver/02/">https://datatracker.ietf.org/doc/draft-momoka-v6ops-ipv6-only-resolver/02/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC1883">[RFC1883]</dt>
+        <dd>
+<span class="refAuthor">Deering, S.</span> and <span class="refAuthor">R. Hinden</span>, <span class="refTitle">"Internet Protocol, Version 6 (IPv6) Specification"</span>, <span class="seriesInfo">RFC 1883</span>, <span class="seriesInfo">DOI 10.17487/RFC1883</span>, <time datetime="1995-12" class="refDate">December 1995</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc1883">https://www.rfc-editor.org/info/rfc1883</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3910">[RFC3910]</dt>
+        <dd>
+<span class="refAuthor">Gurbani, V., Ed.</span>, <span class="refAuthor">Brusilovsky, A.</span>, <span class="refAuthor">Faynberg, I.</span>, <span class="refAuthor">Gato, J.</span>, <span class="refAuthor">Lu, H.</span>, and <span class="refAuthor">M. Unmehopa</span>, <span class="refTitle">"The SPIRITS (Services in PSTN requesting Internet Services) Protocol"</span>, <span class="seriesInfo">RFC 3910</span>, <span class="seriesInfo">DOI 10.17487/RFC3910</span>, <time datetime="2004-10" class="refDate">October 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3910">https://www.rfc-editor.org/info/rfc3910</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+        <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8499">[RFC8499]</dt>
       <dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<span class="refAuthor">Hoffman, P.</span>, <span class="refAuthor">Sullivan, A.</span>, and <span class="refAuthor">K. Fujiwara</span>, <span class="refTitle">"DNS Terminology"</span>, <span class="seriesInfo">BCP 219</span>, <span class="seriesInfo">RFC 8499</span>, <span class="seriesInfo">DOI 10.17487/RFC8499</span>, <time datetime="2019-01" class="refDate">January 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8499">https://www.rfc-editor.org/info/rfc8499</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1349,13 +1488,17 @@ scenarios.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
-<dt id="RFC8174">[RFC8174]</dt>
+<dt id="IANANS">[IANANS]</dt>
         <dd>
-<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"Technical requirements for authoritative name servers"</span>, <span>&lt;<a href="https://www.iana.org/help/nameserver-requirements">https://www.iana.org/help/nameserver-requirements</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC8499">[RFC8499]</dt>
+<dt id="RIPEV4">[RIPEV4]</dt>
+        <dd>
+<span class="refAuthor">RIPE NCC</span>, <span class="refTitle">"The RIPE NCC has run out of IPv4 Addresses"</span>, <time datetime="2019-11" class="refDate">November 2019</time>, <span>&lt;<a href="https://www.ripe.net/publications/news/about-ripe-ncc-and-ripe/the-ripe-ncc-has-run-out-of-ipv4-addresses">https://www.ripe.net/publications/news/about-ripe-ncc-and-ripe/the-ripe-ncc-has-run-out-of-ipv4-addresses</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="V6DNSRDY-23">[V6DNSRDY-23]</dt>
       <dd>
-<span class="refAuthor">Hoffman, P.</span>, <span class="refAuthor">Sullivan, A.</span>, and <span class="refAuthor">K. Fujiwara</span>, <span class="refTitle">"DNS Terminology"</span>, <span class="seriesInfo">BCP 219</span>, <span class="seriesInfo">RFC 8499</span>, <span class="seriesInfo">DOI 10.17487/RFC8499</span>, <time datetime="2019-01" class="refDate">January 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8499">https://www.rfc-editor.org/rfc/rfc8499</a>&gt;</span>. </dd>
+<span class="refAuthor">Streibelt, F.</span>, <span class="refAuthor">Sattler, P.</span>, <span class="refAuthor">Lichtblau, F.</span>, <span class="refAuthor">Hernandez-Gañán, C.</span>, <span class="refAuthor">Gasser, O.</span>, and <span class="refAuthor">T. Fiebig</span>, <span class="refTitle">"How Ready is DNS for an IPv6-Only World?"</span>, <time datetime="2023-03" class="refDate">March 2023</time>, <span>&lt;<a href="https://link.springer.com/chapter/10.1007/978-3-031-28486-1_22">https://link.springer.com/chapter/10.1007/978-3-031-28486-1_22</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1363,8 +1506,8 @@ scenarios.<a href="#section-5-1" class="pilcrow">¶</a></p>
 </section>
 <div id="authors-addresses">
 <section id="appendix-A">
-      <h2 id="name-authors-address">
-<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
         <div class="ascii">
@@ -1379,6 +1522,23 @@ scenarios.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <div class="non-ascii">
 <div dir="auto" class="left"><span class="fn nameRole">山本 桃歌</span></div>
 <div dir="auto" class="left"><span class="org">The University of Tokyo/WIDE Project</span></div>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Tobias Fiebig</span></div>
+<div dir="auto" class="left"><span class="org">Max-Planck-Institut fuer Informatik</span></div>
+<div dir="auto" class="left"><span class="street-address">Campus E14</span></div>
+<div dir="auto" class="left">
+<span class="postal-code">66123</span> <span class="locality">Saarbruecken</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Germany</span></div>
+<div class="tel">
+<span>Phone:</span>
+<a href="tel:+49%20681%209325%203527" class="tel">+49 681 9325 3527</a>
+</div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:tfiebig@mpi-inf.mpg.de" class="email">tfiebig@mpi-inf.mpg.de</a>
 </div>
 </address>
 </section>
