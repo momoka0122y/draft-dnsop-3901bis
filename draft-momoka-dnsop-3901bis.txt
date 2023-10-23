@@ -18,7 +18,7 @@ Abstract
    of the Hypertext This memo provides guidelines and documents Best
    Current Practice for operating authoritative and recursive DNS
    servers given that queries and responses are carried in a mixed
-   environment of IPv4 and IPv6 networks.  It expands beyond [RFC3910]
+   environment of IPv4 and IPv6 networks.  It expands beyond [RFC3901]
    in so far that it now considers the reality of progressing IPv4
    exhaustion, which will make IPv6-only resolvers necessary in the
    long-term.
@@ -88,8 +88,9 @@ Table of Contents
 
    Despite IPv6 being first discussed in the mid 1990s [RFC1883],
    consistent deployment throughout the whole Internet has not yet been
-   accomplished.  Hence, today, the Internet is a mixture of IPv4, dual-
-   stack (networks connected via both IP versions), and IPv6 networks.
+   accomplished [RFC9386].  Hence, today, the Internet is a mixture of
+   IPv4, dual-stack (networks connected via both IP versions), and IPv6
+   networks.
 
    This creates a complex landscape where authoritative name servers
    might be accessible only via specific network protocols
@@ -334,11 +335,9 @@ Normative References
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-   [RFC3910]  Gurbani, V., Ed., Brusilovsky, A., Faynberg, I., Gato, J.,
-              Lu, H., and M. Unmehopa, "The SPIRITS (Services in PSTN
-              requesting Internet Services) Protocol", RFC 3910,
-              DOI 10.17487/RFC3910, October 2004,
-              <https://www.rfc-editor.org/info/rfc3910>.
+   [RFC3901]  Durand, A. and J. Ihren, "DNS IPv6 Transport Operational
+              Guidelines", BCP 91, RFC 3901, DOI 10.17487/RFC3901,
+              September 2004, <https://www.rfc-editor.org/info/rfc3901>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -360,6 +359,11 @@ Informative References
    [IANANS]   IANA, "Technical requirements for authoritative name
               servers",
               <https://www.iana.org/help/nameserver-requirements>.
+
+   [RFC9386]  Fioccola, G., Volpato, P., Palet Martinez, J., Mishra, G.,
+              and C. Xie, "IPv6 Deployment Status", RFC 9386,
+              DOI 10.17487/RFC9386, April 2023,
+              <https://www.rfc-editor.org/info/rfc9386>.
 
    [RIPEV4]   RIPE NCC, "The RIPE NCC has run out of IPv4 Addresses",
               November 2019, <https://www.ripe.net/publications/news/
