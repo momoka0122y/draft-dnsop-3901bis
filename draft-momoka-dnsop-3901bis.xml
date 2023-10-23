@@ -39,7 +39,7 @@
         <abstract>
     <t indent="0" pn="section-abstract-1">This specification describes an optimized expression of the semantics of the Hypertext
         This memo provides guidelines and documents Best Current Practice for operating authoritative and recursive DNS servers given that queries and responses are carried in a mixed environment of IPv4 and IPv6 networks.
-        It expands beyond <xref target="RFC3910" format="default"/> in so far that it now considers the reality of progressing IPv4 exhaustion, which will make IPv6-only resolvers necessary in the long-term.</t>
+        It expands beyond <xref target="RFC3901" format="default"/> in so far that it now considers the reality of progressing IPv4 exhaustion, which will make IPv6-only resolvers necessary in the long-term.</t>
     <t indent="0" pn="section-abstract-2">This document obsoletes RFC 3901. (if approved)</t>
         </abstract>
         <note removeInRFC="true">
@@ -53,7 +53,7 @@
         <section anchor="introduction">
             <name>Introduction</name>
             <t>
-                Despite IPv6 being first discussed in the mid 1990s <xref target="RFC1883" format="default"/>, consistent deployment throughout the whole Internet has not yet been accomplished.
+                Despite IPv6 being first discussed in the mid 1990s <xref target="RFC1883" format="default"/>, consistent deployment throughout the whole Internet has not yet been accomplished <xref target="RFC9386" format="default"/>.
                 Hence, today, the Internet is a mixture of IPv4, dual-stack (networks connected via both IP versions), and IPv6 networks.
             </t>
             <t>
@@ -281,12 +281,13 @@
                 <name>Normative References</name>
                 <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.1883.xml"/>
                 <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
-                <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3910.xml"/>
+                <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3901.xml"/>
                 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
                 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8499.xml"/>
             </references>
             <references anchor="sec-informative-references">
                 <name>Informative References</name>
+                <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9386.xml"/>
                 <reference anchor="V6DNSRDY-23" target="https://link.springer.com/chapter/10.1007/978-3-031-28486-1_22">
                     <front>
                         <title>How Ready is DNS for an IPv6-Only World?</title>
