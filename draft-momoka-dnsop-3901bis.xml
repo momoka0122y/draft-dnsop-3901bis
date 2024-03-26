@@ -39,7 +39,7 @@
         <abstract>
     <t indent="0" pn="section-abstract-1">
         This memo provides guidelines and documents Best Current Practice for operating authoritative and recursive DNS servers given that queries and responses are carried in a mixed environment of IPv4 and IPv6 networks.
-        It expands beyond <xref target="RFC3901" format="default"/> in so far that it now considers the reality of progressing IPv4 exhaustion, which will make IPv6-only resolvers necessary in the long-term.</t>
+        It expands beyond RFC3901 in so far that it now suggests authoritative and iterative resolvers to operate on both IPv4 and IPv6.</t>
     <t indent="0" pn="section-abstract-2">This document obsoletes RFC 3901. (if approved)</t>
         </abstract>
         <note removeInRFC="true">
@@ -232,7 +232,7 @@
                     </dd>
                 </dl>
                 <t>
-                    Note: zone validation processes <bcp14>SHOULD</bcp14> ensure that there is at least one IPv4 address record and one IPv6 address record available for the name servers of any child delegations within the zone.
+                    Note: zone validation processes <bcp14>SHOULD</bcp14> ensure that there is at least one IPv4 address record and one IPv6 address record available for the name servers of any child delegation within the zone.
                 </t>
             </section>
             <section anchor="guidelines-for-dns-resolvers">
