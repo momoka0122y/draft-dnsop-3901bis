@@ -60,6 +60,11 @@
                 This creates a complex landscape where authoritative name servers might be accessible only via specific network protocols <xref target="V6DNSRDY-23" format="default"/>.
                 At the same time, DNS resolvers may only be able to access the Internet via either IPv4 or IPv6. This poses a challenge for such resolvers because they may encounter names for which queries must be directed to authoritative name servers with which they do not share an IP version during the name resolution process.
             </t>
+            <t>
+                <xref target="RFC3901" format="default"/> was initially written at a time when IPv6 deployment was not widespread, focusing primarily on maintaining namespace continuity within the IPv4 landscape.
+                Now, nearly two decades later, with IPv6 not only widely deployed but also becoming the de facto standard in many areas.
+                This document seeks to expand the scope of RFC3901 by recommending IPv6 compatibility for authoritative and iterative DNS resolvers.
+            </t>
             <t>In this document, we discuss:</t>
             <ul spacing="normal">
                 <li>
