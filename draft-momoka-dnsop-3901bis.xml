@@ -13,7 +13,7 @@
         <title abbrev="3901bis">DNS IPv6 Transport Operational Guidelines</title>
         <seriesInfo name="Internet-Draft" value="draft-momoka-dnsop-3901bis-latest"/>
         <author fullname="山本 桃歌" asciiFullname="Momoka Yamamoto" initials="Momoka" surname="Y">
-            <organization>The University of Tokyo/WIDE Project</organization>
+            <organization>WIDE Project</organization>
             <address>
                 <email>momoka.my6@gmail.com</email>
             </address>
@@ -31,7 +31,7 @@
                         <email>tfiebig@mpi-inf.mpg.de</email>
                 </address>
         </author>
-        <date year="2024" month="March" day="27"/>
+        <date year="2024" month="April" day="20"/>
         <area>Ops</area>
         <workgroup>dnsop</workgroup>
         <keyword>DNS</keyword>
@@ -53,7 +53,7 @@
         <section anchor="introduction">
             <name>Introduction</name>
             <t>
-                Despite IPv6 being first discussed in the mid 1990s <xref target="RFC1883" format="default"/>, consistent deployment throughout the whole Internet has not yet been accomplished <xref target="RFC9386" format="default"/>.
+                Despite IPv6 being first discussed in the mid-1990s <xref target="RFC1883" format="default"/>, consistent deployment throughout the whole Internet has not yet been accomplished <xref target="RFC9386" format="default"/>.
                 Hence, today, the Internet is a mixture of IPv4, dual-stack (networks connected via both IP versions), and IPv6 networks.
             </t>
             <t>
@@ -62,8 +62,8 @@
             </t>
             <t>
                 <xref target="RFC3901" format="default"/> was initially written at a time when IPv6 deployment was not widespread, focusing primarily on maintaining namespace continuity within the IPv4 landscape.
-                Now, nearly two decades later, with IPv6 not only widely deployed but also becoming the de facto standard in many areas.
-                This document seeks to expand the scope of RFC3901 by recommending IPv6 compatibility for authoritative and iterative DNS resolvers.
+                Now, nearly two decades later, with IPv6 not only widely deployed but also becoming the de facto standard in many areas,
+                this document seeks to expand the scope of RFC3901 by recommending IPv6 compatibility for authoritative and iterative DNS resolvers.
             </t>
             <t>In this document, we discuss:</t>
             <ul spacing="normal">
@@ -153,19 +153,19 @@
                         Missing GLUE:
                     </dt>
                     <dd>
-                        If the name from an NS record for a zone is in-bailiwick, i.e., the name is within the zone or below, a parent zone must contain an IPv4 and IPv6 GLUE record, i.e., a parent must serve the corresponding A or AAAA record(s) as ADDITIONAL data when returning the NS record in the ANSWER section.
+                        If the name from an NS record for a zone is in-domain, i.e., the name is within the zone or below, a parent zone must contain an IPv4 and IPv6 GLUE record, i.e., a parent must serve the corresponding A or AAAA record(s) as ADDITIONAL data when returning the NS record in the ANSWER section.
                     </dd>
                     <dt>
-                        No A/AAAA record for in-bailiwick NS:
+                        No A/AAAA record for in-domain NS:
                     </dt>
                     <dd>
-                        If an NS record of a zone points to a name that is in-bailiwick but the name lacks corresponding A or AAAA record(s) in its zone, resolution via the concerned IP version will fail even if the parent provides GLUE, when the recursive server validates the delegation path.
+                        If an NS record of a zone points to a name that is in-domain but the name lacks corresponding A or AAAA record(s) in its zone, resolution via the concerned IP version will fail even if the parent provides GLUE, when the recursive server validates the delegation path.
                     </dd>
                     <dt>
-                        Zone of out-of-bailiwick NSes not resolving:
+                        Zone of sibling domain NSes not resolving:
                     </dt>
                     <dd>
-                        If an NS record of a zone is out-of-bailiwick, the corresponding zone must be resolvable via the IP version in question as well. It is insufficient if the name pointed to by the NS record has an associated A or AAAA record correspondingly.
+                        If an NS record of a zone is sibling domain, the corresponding zone must be resolvable via the IP version in question as well. It is insufficient if the name pointed to by the NS record has an associated A or AAAA record correspondingly.
                     </dd>
                     <dt>
                         Parent zone not resolvable via one IP version:
@@ -185,8 +185,8 @@
             <section anchor="reasons-for-intentional-ip-version-related-name-space-fragmentation">
                 <name>Reasons for Intentional IP Version Related Name Space Fragmentation</name>
                 <t>
-                    Intentional IP related name space fragmentation occurs if an operator consciously decides to not deploy IPv4 or IPv6 for a part of the resolution chain.
-                    Most commonly, this is realized by consciously not listing A/AAAA records for NS names in and out of bailiwick, including missing GLUE.
+                    Intentional IP related name space fragmentation occurs if an operator consciously decides not to deploy IPv4 or IPv6 for a part of the resolution chain.
+                    Most commonly, this is realized by consciously not listing A/AAAA records for NS names in sibling domains, including missing GLUE.
                     At the time of writing, the share of zones not resolvable via IPv4 is negligible, while a little less than 40% of zones are not resolvable via IPv6 <xref target="V6DNSRDY-23" format="default"/>.
                     However, as IPv4 exhaustion becomes more critical, this will change in the future
                 </t>
@@ -210,7 +210,7 @@
                 <name>Guidelines for Authoritative DNS Configuration</name>
                 <t>
                     It is usually recommended that DNS zones contain at least two name servers, which are geographically diverse and operate under different routing policies <xref target="IANANS" format="default"/>.
-                    To reduce the chance of DNS name space fragmentation, it is <bcp14>RECOMMENDED</bcp14> that at least two NS for a zone are dual stack name servers.
+                    To reduce the chance of DNS name space fragmentation, it is <bcp14>RECOMMENDED</bcp14> that at least two name servers for a zone are dual stack name servers.
                     Specifically, this means that the following minimal requirements <bcp14>SHOULD</bcp14> be implemented for a zone:
                 </t>
                 <dl newline="true" spacing="normal">
@@ -219,15 +219,15 @@
                     </dt>
                     <dd>
                             Every authoritative DNS zone <bcp14>SHOULD</bcp14> be served by at least one IPv4-reachable authoritative name server to maintain name space continuity.
-                            The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) <bcp14>MUST</bcp14> not rely on IPv6 connectivity being available.
-                            As we acknowledge IPv4 scarcity, operators <bcp14>MAY</bcp14> opt to not provide DNS services via IPv4, if they can ensure that all clients expected to resolve this zone do support DNS resolution via IPv6.
+                            The delegation configuration (Resolution of the parent, resolution of sibling domain names, GLUE) <bcp14>MUST</bcp14> not rely on IPv6 connectivity being available.
+                            As we acknowledge IPv4 scarcity, operators <bcp14>MAY</bcp14> opt not to provide DNS services via IPv4, if they can ensure that all clients expected to resolve this zone do support DNS resolution via IPv6.
                     </dd>
                     <dt>
                             IPv6 adoption:
                     </dt>
                     <dd>
                             Every authoritative DNS zone <bcp14>SHOULD</bcp14> be served by at least one IPv6-reachable authoritative name server to maintain name space continuity.
-                            The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) <bcp14>MUST</bcp14> not rely on IPv4 connectivity being available.
+                            The delegation configuration (Resolution of the parent, resolution of sibling domain names, GLUE) <bcp14>MUST</bcp14> not rely on IPv4 connectivity being available.
                     </dd>
                     <dt>
                             Consistency:
@@ -253,18 +253,15 @@
                 </t>
                 <t>
                     While the zones that IPv6-only iterative resolvers can resolve are growing but do not yet cover all zones, they cannot fully resolve all zones.
-                    Hence, a recursive resolver <bcp14>MAY</bcp14> be IPv6-only, if it uses a transition mechanism for IPv4 reachability <xref target="draft-ietf-v6ops-ipv6-only-resolver" format="default"/> or use a configuration where such resolvers forward queries failing IPv6 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
+                    Hence, a recursive resolver <bcp14>MAY</bcp14> be IPv6-only, if it uses a transition mechanism for IPv4 reachability <xref target="draft-ietf-v6ops-ipv6-only-resolver" format="default"/> or uses a configuration where such resolvers forward queries failing IPv6-only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
                 </t>
                 <t>
-                    Similarly, a recursive resolver <bcp14>MAY</bcp14> be IPv4-only, if it use a configuration where such resolvers forward queries failing IPv4 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
+                    Similarly, a recursive resolver <bcp14>MAY</bcp14> be IPv4-only, if it uses a configuration where such resolvers forward queries failing IPv4-only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
                 </t>
             </section>
         </section>
         <section anchor="security-considerations">
             <name>Security Considerations</name>
-            <t>
-                TODO: This requires some input as, e.g., dual-stack services have implications for ratelimiting etc.
-            </t>
             <t>
                 The guidelines described in this memo introduce no new security considerations into the DNS protocol or associated operational scenarios.
             </t>
@@ -342,7 +339,7 @@
                     <front>
                         <title>IPv6-only Capable Resolvers Utilising NAT64</title>
                         <author fullname="山本 桃歌" asciiFullname="Momoka Yamamoto">
-                            <organization>The University of Tokyo/WIDE Project</organization>
+                            <organization>WIDE Project</organization>
                             <address>
                             <email>momoka.my6@gmail.com</email>
                             </address>
