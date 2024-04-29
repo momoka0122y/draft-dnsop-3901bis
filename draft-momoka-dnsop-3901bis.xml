@@ -31,7 +31,7 @@
                         <email>tfiebig@mpi-inf.mpg.de</email>
                 </address>
         </author>
-        <date year="2024" month="April" day="20"/>
+        <date year="2024" month="April" day="30"/>
         <area>Ops</area>
         <workgroup>dnsop</workgroup>
         <keyword>DNS</keyword>
@@ -94,7 +94,7 @@
         <section anchor="terminology">
             <name>Terminology</name>
             <t>
-                This document uses DNS terminology as described in <xref target="RFC8499" format="default"/>.
+                This document uses DNS terminology as described in <xref target="RFC9499" format="default"/>.
                 Furthermore, the following terms are used with a defined meaning:
             </t>
             <dl newline="true" spacing="normal">
@@ -153,19 +153,20 @@
                         Missing GLUE:
                     </dt>
                     <dd>
-                        If the name from an NS record for a zone is in-domain, i.e., the name is within the zone or below, a parent zone must contain an IPv4 and IPv6 GLUE record, i.e., a parent must serve the corresponding A or AAAA record(s) as ADDITIONAL data when returning the NS record in the ANSWER section.
+                        If the name from an NS record for a zone is in-domain, i.e., the name is within the zone or below, a parent zone must contain both IPv4 and IPv6 GLUE records, i.e., a parent must serve the corresponding A and AAAA records as ADDITIONAL data when returning the NS record(s) as the referral response.
                     </dd>
                     <dt>
                         No A/AAAA record for in-domain NS:
                     </dt>
                     <dd>
-                        If an NS record of a zone points to a name that is in-domain but the name lacks corresponding A or AAAA record(s) in its zone, resolution via the concerned IP version will fail even if the parent provides GLUE, when the recursive server validates the delegation path.
+                        If an NS record of a child zone, either provided by the parent or from the child zone's apex, points to a name in the NS RDATA that is in-domain but the name does not contain corresponding A or AAAA record(s) in the child zone,
+                        name resolution via the concerned IP version will fail even if the parent provides GLUE, when the recursive server revalidates the delegation path <xref target="I-D.ietf-dnsop-ns-revalidation" format="default"/>.
                     </dd>
                     <dt>
                         Zone of sibling domain NSes not resolving:
                     </dt>
                     <dd>
-                        If an NS record of a zone is sibling domain, the corresponding zone must be resolvable via the IP version in question as well. It is insufficient if the name pointed to by the NS record has an associated A or AAAA record correspondingly.
+                        If the name from an NS record for a zone is sibling domain, the corresponding zone must be resolvable via the IP version in question as well. It is insufficient if the name pointed to by the NS record has an associated A or AAAA record correspondingly.
                     </dd>
                     <dt>
                         Parent zone not resolvable via one IP version:
@@ -186,9 +187,9 @@
                 <name>Reasons for Intentional IP Version Related Name Space Fragmentation</name>
                 <t>
                     Intentional IP related name space fragmentation occurs if an operator consciously decides not to deploy IPv4 or IPv6 for a part of the resolution chain.
-                    Most commonly, this is realized by consciously not listing A/AAAA records for NS names in sibling domains, including missing GLUE.
+                    Most commonly, this is realized by intentionally not listing A/AAAA records for NS names.
                     At the time of writing, the share of zones not resolvable via IPv4 is negligible, while a little less than 40% of zones are not resolvable via IPv6 <xref target="V6DNSRDY-23" format="default"/>.
-                    However, as IPv4 exhaustion becomes more critical, this will change in the future
+                    However, as IPv4 exhaustion becomes more critical, this will change in the future.
                 </t>
             </section>
         </section>
@@ -239,7 +240,8 @@
                             Avoiding Fragmentation:
                     </dt>
                     <dd>
-                            To avoid DNS fragmentation for both, IPv4 and IPv6, <xref target="AVOID_FRAGS" format="default"/> SHOULD be followed.
+                            IP fragmentation has been reported to be fragile <xref target="RFC8900" format="default"/>. 
+                            Therefore, IP fragmentation should be avoided in order to treat both IPv4/IPv6 equally <xref target="I-D.ietf-dnsop-avoid-fragmentation" format="default"/>.
                     </dd>
                 </dl>
                 <t>
@@ -253,7 +255,7 @@
                 </t>
                 <t>
                     While the zones that IPv6-only iterative resolvers can resolve are growing but do not yet cover all zones, they cannot fully resolve all zones.
-                    Hence, a recursive resolver <bcp14>MAY</bcp14> be IPv6-only, if it uses a transition mechanism for IPv4 reachability <xref target="draft-ietf-v6ops-ipv6-only-resolver" format="default"/> or uses a configuration where such resolvers forward queries failing IPv6-only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
+                    Hence, a recursive resolver <bcp14>MAY</bcp14> be IPv6-only, if it uses a transition mechanism for IPv4 reachability <xref target="I-D.ietf-v6ops-ipv6-only-resolver" format="default"/> or uses a configuration where such resolvers forward queries failing IPv6-only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
                 </t>
                 <t>
                     Similarly, a recursive resolver <bcp14>MAY</bcp14> be IPv4-only, if it uses a configuration where such resolvers forward queries failing IPv4-only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
@@ -291,26 +293,16 @@
                 <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
                 <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3901.xml"/>
                 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
-                <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8499.xml"/>
-                <reference anchor="AVOID_FRAGS" target="https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/">
-                    <front>
-                        <title>IP Fragmentation Avoidance in DNS over UDP</title>
-                        <author fullname="Kazunori Fujiwara">
-                        <organization showOnFrontPage="true">Japan Registry Services Co., Ltd.</organization>
-                        </author>
-                        <author fullname="Paul Vixie">
-                        <organization showOnFrontPage="true">none</organization>
-                        </author>
-                        <date month="February" day="29" year="2024"/>
-                    </front>
-                    <seriesInfo name="Internet-Draft" value="draft-ietf-dnsop-avoid-fragmentation"/>
-                    <format type="TXT" target="https://datatracker.ietf.org/doc/draft-ietf-dnsop-avoid-fragmentation/"/>
-                    <refcontent>Work in Progress</refcontent>
-                </reference>
+                <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dnsop-ns-revalidation.xml"/>
+                <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dnsop-avoid-fragmentation.xml"/>
+
             </references>
             <references anchor="sec-informative-references">
                 <name>Informative References</name>
                 <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9386.xml"/>
+                <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9499.xml"/>
+                <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8900.xml"/>
+                <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-v6ops-ipv6-only-resolver.xml"/>
                 <reference anchor="V6DNSRDY-23" target="https://link.springer.com/chapter/10.1007/978-3-031-28486-1_22">
                     <front>
                         <title>How Ready is DNS for an IPv6-Only World?</title>
@@ -334,25 +326,6 @@
                         </author>
                         <date month="March" year="2023"/>
                     </front>
-                </reference>
-                <reference anchor="draft-ietf-v6ops-ipv6-only-resolver" target="https://datatracker.ietf.org/doc/draft-ietf-v6ops-ipv6-only-resolver/">
-                    <front>
-                        <title>IPv6-only Capable Resolvers Utilising NAT64</title>
-                        <author fullname="山本 桃歌" asciiFullname="Momoka Yamamoto">
-                            <organization>WIDE Project</organization>
-                            <address>
-                            <email>momoka.my6@gmail.com</email>
-                            </address>
-                        </author>
-                        <author fullname="豊田 安信" asciiFullname="Yasunobu Toyota">
-                            <organization>Keio University/WIDE Project</organization>
-                            <address>
-                            <email>yas-nyan@sfc.wide.ad.jp</email>
-                            </address>
-                        </author>
-                        <date month="October" day="23" year="2023"/>
-                    </front>
-                    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-ipv6-only-resolver"/>
                 </reference>
                 <reference anchor="RIPEV4" target="https://www.ripe.net/publications/news/about-ripe-ncc-and-ripe/the-ripe-ncc-has-run-out-of-ipv4-addresses">
                     <front>
