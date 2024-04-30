@@ -38,9 +38,9 @@
         <keyword>IPv6</keyword>
         <abstract>
     <t indent="0" pn="section-abstract-1">
-        This memo provides guidelines and documents Best Current Practice for operating authoritative and recursive DNS servers given that queries and responses are carried in a mixed environment of IPv4 and IPv6 networks.
-        It expands beyond RFC3901 in so far that it now suggests authoritative and iterative resolvers to operate on both IPv4 and IPv6.</t>
-    <t indent="0" pn="section-abstract-2">This document obsoletes RFC 3901. (if approved)</t>
+        This memo provides guidelines and documents Best Current Practice for operating authoritative and recursive DNS servers, given that queries and responses are carried in a mixed environment of IPv4 and IPv6 networks.
+        It expands on RFC 3901 by now suggesting authoritative and iterative resolvers to operate on both IPv4 and IPv6.</t>
+    <t indent="0" pn="section-abstract-2">This document obsoletes RFC3901. (if approved)</t>
         </abstract>
         <note removeInRFC="true">
             <name>Discussion Venues</name>
@@ -102,13 +102,13 @@
                     IPv4 name server:
                 </dt>
                 <dd>
-                    This refers to a name server providing DNS services reachable via IPv4. It does not imply anything about what DNS data is served, but requires DNS queries to be received and answered over IPv4.
+                    A name server providing DNS services reachable via IPv4. It does not imply anything about what DNS data is served, but requires DNS queries to be received and answered over IPv4.
                 </dd>
                 <dt>
                     IPv6 name server:
                 </dt>
                 <dd>
-                    This refers to a name server providing DNS services reachable via IPv6. It does not imply anything about what DNS data is served, but requires DNS queries to be received and answered over IPv6.
+                    A name server providing DNS services reachable via IPv6. It does not imply anything about what DNS data is served, but requires DNS queries to be received and answered over IPv6.
                 </dd>
                 <dt>
                     Dual-stack name server:
@@ -240,7 +240,7 @@
                             Avoiding Fragmentation:
                     </dt>
                     <dd>
-                            IP fragmentation has been reported to be fragile <xref target="RFC8900" format="default"/>. 
+                            IP fragmentation has been reported to be fragile <xref target="RFC8900" format="default"/>.
                             Therefore, IP fragmentation should be avoided in order to treat both IPv4/IPv6 equally <xref target="I-D.ietf-dnsop-avoid-fragmentation" format="default"/>.
                     </dd>
                 </dl>
