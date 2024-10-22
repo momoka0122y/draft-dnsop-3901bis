@@ -196,7 +196,7 @@
             <name>Policy Based Avoidance of Name Space Fragmentation</name>
             <t>
                 With the final exhaustion of IPv4 pools in RIRs, e.g., <xref target="RIPEV4" format="default"/>, and the progressing deployment of IPv6, there no longer is a "preferred" IP version.
-                Yet, while we now observe the first zones becoming exclusively IPv6 resolvable, we also still see a major portion of zones solely relying on legacy IP <xref target="V6DNSRDY-23" format="default"/>.
+                Yet, while we now observe the first zones becoming exclusively IPv6 resolvable, we also still see a major portion of zones solely relying on IPv4 <xref target="V6DNSRDY-23" format="default"/>.
                 Hence, at the moment, dual stack connectivity is instrumental to be able to resolve zones and avoid name space fragmentation.
             </t>
             <t>
@@ -219,7 +219,7 @@
                     </dt>
                     <dd>
                             Every authoritative DNS zone <bcp14>SHOULD</bcp14> be served by at least one IPv4-reachable authoritative name server to maintain name space continuity.
-                            The delegation configuration (Resolution of the parent, resolution of sibling domain names, GLUE) <bcp14>MUST</bcp14> not rely on IPv6 connectivity being available.
+                            The delegation configuration (Resolution of the parent, resolution of sibling domain names, GLUE) <bcp14>MUST NOT</bcp14> rely on IPv6 connectivity being available.
                             As we acknowledge IPv4 scarcity, operators <bcp14>MAY</bcp14> opt not to provide DNS services via IPv4, if they can ensure that all clients expected to resolve this zone do support DNS resolution via IPv6.
                     </dd>
                     <dt>
@@ -227,7 +227,7 @@
                     </dt>
                     <dd>
                             Every authoritative DNS zone <bcp14>SHOULD</bcp14> be served by at least one IPv6-reachable authoritative name server to maintain name space continuity.
-                            The delegation configuration (Resolution of the parent, resolution of sibling domain names, GLUE) <bcp14>MUST</bcp14> not rely on IPv4 connectivity being available.
+                            The delegation configuration (Resolution of the parent, resolution of sibling domain names, GLUE) <bcp14>MUST NOT</bcp14> rely on IPv4 connectivity being available.
                     </dd>
                     <dt>
                             Consistency:
@@ -241,7 +241,7 @@
                     <dd>
                             IP fragmentation has been reported to be fragile <xref target="RFC8900" format="default"/>.
                             Furthermore, IPv6 transition technologies can introduce unexpected MTU breaks, e.g., when NAT64 is used <xref target="RFC7269" format="default"/>.
-                            Therefore, IP fragmentation should be avoided by following guidance on maximum DNS payload sizes <xref target="I-D.ietf-dnsop-avoid-fragmentation" format="default"/> and providing TCP fall-back options <xref target="RFC7766" format="default"/>.
+                            Therefore, IP fragmentation <bcp14>SHOULD</bcp14> be avoided by following guidance on maximum DNS payload sizes <xref target="I-D.ietf-dnsop-avoid-fragmentation" format="default"/> and providing TCP fall-back options <xref target="RFC7766" format="default"/>.
                     </dd>
                 </dl>
                 <t>
