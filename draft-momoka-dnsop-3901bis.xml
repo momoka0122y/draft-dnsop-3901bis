@@ -146,7 +146,7 @@
                         No A/AAAA records for NS names:
                     </dt>
                     <dd>
-                        If none of the NS records for a zone in their parent zone have associated A or AAAA records, while holding the inverse record, resolution via the concerned IP version is not possible.
+                        If all of the NS records for a zone in their parent zone have either only A records or only AAAA records, then resolution via the other IP version is not possible.
                     </dd>
                     <dt>
                         Missing GLUE:
@@ -179,7 +179,7 @@
                     The above misconfigurations are not mutually exclusive.
                 </t>
                 <t>
-                    Furthermore, any of the misconfigurations above may also materialize not via a missing Resource Record (RR) but via an RR providing the IP address of a nameserver that is not configured to answer queries via that IP version <xref target="V6DNSRDY-23" format="default"/>.
+                    Furthermore, any of the misconfigurations above may not only materialize via a missing Resource Record (RR) but also via an RR providing the IP address of a nameserver that is not configured to answer queries via that IP version <xref target="V6DNSRDY-23" format="default"/>.
                 </t>
             </section>
             <section anchor="reasons-for-intentional-ip-version-related-name-space-fragmentation">
@@ -251,7 +251,7 @@
             <section anchor="guidelines-for-dns-resolvers">
                 <name>Guidelines for DNS Resolvers</name>
                 <t>
-                    Every recurisve DNS resolver <bcp14>SHOULD</bcp14> be dual stack.
+                    Every recursive DNS resolver <bcp14>SHOULD</bcp14> be dual stack.
                 </t>
                 <t>
                     While the zones that IPv6-only recursive DNS resolvers can resolve are growing but do not yet cover all zones, they cannot fully resolve all zones.
@@ -277,7 +277,7 @@
         <section numbered="false" anchor="acknowledgments">
             <name>Acknowledgments</name>
             <t>
-                TODO: acknowledge people.
+                Valuable input for this draft was provided by: Bob Harold
             </t>
             <t>
                 Thank you for reading this draft.
