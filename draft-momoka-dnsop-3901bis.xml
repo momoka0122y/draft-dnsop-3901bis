@@ -235,12 +235,12 @@
                             Both IPv4 and IPv6 transports should serve identical DNS data to ensure a consistent resolution experience across different network types.
                     </dd>
                     <dt>
-                            Avoiding Fragmentation:
+                            Avoiding IP Fragmentation:
                     </dt>
                     <dd>
                             IP fragmentation has been reported to be fragile <xref target="RFC8900" format="default"/>.
                             Furthermore, IPv6 transition technologies can introduce unexpected MTU breaks, e.g., when NAT64 is used <xref target="RFC7269" format="default"/>.
-                            Therefore, IP fragmentation <bcp14>SHOULD</bcp14> be avoided by following guidance on maximum DNS payload sizes <xref target="I-D.ietf-dnsop-avoid-fragmentation" format="default"/> and providing TCP fall-back options <xref target="RFC7766" format="default"/>.
+                            Therefore, IP fragmentation <bcp14>SHOULD</bcp14> be avoided by following guidance on maximum DNS payload sizes <xref target="RFC9715" format="default"/> and providing TCP fall-back options <xref target="RFC7766" format="default"/>.
                     </dd>
                 </dl>
                 <t>
@@ -254,7 +254,7 @@
                 </t>
                 <t>
                     While the zones that IPv6-only recursive DNS resolvers can resolve are growing but do not yet cover all zones, they cannot fully resolve all zones.
-                    Hence, a recursive resolver <bcp14>MAY</bcp14> be IPv6-only, if it uses a transition mechanism for IPv4 reachability <xref target="I-D.ietf-v6ops-ipv6-only-resolver" format="default"/> or uses a configuration where such resolvers forward queries failing IPv6-only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
+                    Hence, a recursive resolver <bcp14>MAY</bcp14> be IPv6-only, if it uses a transition mechanism that allows it to also query IPv4 authoritative NS or uses a configuration where it forward queries failing IPv6-only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
                 </t>
                 <t>
                     Similarly, a recursive resolver <bcp14>MAY</bcp14> be IPv4-only, if it uses a configuration where such resolvers forward queries failing IPv4-only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.
@@ -276,7 +276,7 @@
         <section numbered="false" anchor="acknowledgments">
             <name>Acknowledgments</name>
             <t>
-                Valuable input for this draft was provided by: Bob Harold
+                Valuable input for this draft was provided by: Bob Harold, Andreas Schulze, Tommy Jensen, Nick Buraglio, Jen Linkova
             </t>
             <t>
                 Thank you for reading this draft.
@@ -294,7 +294,7 @@
                 <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7766.xml"/>
                 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
                 <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dnsop-ns-revalidation.xml"/>
-                <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dnsop-avoid-fragmentation.xml"/>
+                <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9715.xml"/>
 
             </references>
             <references anchor="sec-informative-references">
