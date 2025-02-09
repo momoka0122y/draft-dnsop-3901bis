@@ -3,10 +3,10 @@
 
 
 dnsop                                                          Momoka. Y
-Internet-Draft                      The University of Tokyo/WIDE Project
+Internet-Draft                                              WIDE Project
 Obsoletes: 3901 (if approved)                                  T. Fiebig
-Intended status: Informational                                   MPI-INF
-Expires: 22 April 2024                                   20 October 2023
+Intended status: Best Current Practice                           MPI-INF
+Expires: 13 August 2025                                  9 February 2025
 
 
                DNS IPv6 Transport Operational Guidelines
@@ -14,16 +14,13 @@ Expires: 22 April 2024                                   20 October 2023
 
 Abstract
 
-   This specification describes an optimized expression of the semantics
-   of the Hypertext This memo provides guidelines and documents Best
-   Current Practice for operating authoritative and recursive DNS
-   servers given that queries and responses are carried in a mixed
-   environment of IPv4 and IPv6 networks.  It expands beyond [RFC3901]
-   in so far that it now considers the reality of progressing IPv4
-   exhaustion, which will make IPv6-only resolvers necessary in the
-   long-term.
+   This memo provides guidelines and documents Best Current Practice for
+   operating authoritative and recursive DNS servers, given that queries
+   and responses are carried in a mixed environment of IPv4 and IPv6
+   networks.  This document expands on RFC 3901 by recommending that
+   authoritative and recursive resolvers support both IPv4 and IPv6.
 
-   This document obsoletes RFC 3901. (if approved)
+   This document obsoletes RFC3901. (if approved)
 
 Discussion Venues
 
@@ -47,11 +44,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 April 2024.
+   This Internet-Draft will expire on 13 August 2025.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -74,7 +71,7 @@ Table of Contents
      3.2.  Reasons for Intentional IP Version Related Name Space
            Fragmentation
    4.  Policy Based Avoidance of Name Space Fragmentation
-     4.1.  Guidelines for DNS Zone Configuration
+     4.1.  Guidelines for Authoritative DNS Server Configuration
      4.2.  Guidelines for DNS Resolvers
    5.  Security Considerations
    6.  IANA Considerations
@@ -86,7 +83,7 @@ Table of Contents
 
 1.  Introduction
 
-   Despite IPv6 being first discussed in the mid 1990s [RFC1883],
+   Despite IPv6 being first discussed in the mid-1990s [RFC1883],
    consistent deployment throughout the whole Internet has not yet been
    accomplished [RFC9386].  Hence, today, the Internet is a mixture of
    IPv4, dual-stack (networks connected via both IP versions), and IPv6
@@ -98,8 +95,15 @@ Table of Contents
    access the Internet via either IPv4 or IPv6.  This poses a challenge
    for such resolvers because they may encounter names for which queries
    must be directed to authoritative name servers with which they do not
-   share an IP version during the name resolution process
-   [draft-momoka-v6ops-ipv6-only-resolver-02].
+   share an IP version during the name resolution process.
+
+   [RFC3901] was initially written at a time when IPv6 deployment was
+   not widespread, focusing primarily on maintaining namespace
+   continuity within the IPv4 landscape.  Now, nearly two decades later,
+   with IPv6 not only widely deployed but also becoming the de facto
+   standard in many areas, this document seeks to expand the scope of
+   RFC3901 by recommending IPv6 compatibility for authoritative and
+   recursive DNS resolvers.
 
    In this document, we discuss:
 
@@ -127,18 +131,18 @@ Table of Contents
 
 2.  Terminology
 
-   This document uses DNS terminology as described in [RFC8499].
+   This document uses DNS terminology as described in [RFC9499].
    Furthermore, the following terms are used with a defined meaning:
 
    IPv4 name server:
-      This refers to a name server providing DNS services reachable via
-      IPv4.  It does not imply anything about what DNS data is served,
-      but requires DNS queries to be received and answered over IPv4.
+      A name server providing DNS services reachable via IPv4.  It does
+      not imply anything about what DNS data is served, but requires DNS
+      queries to be received and answered over IPv4.
 
    IPv6 name server:
-      This refers to a name server providing DNS services reachable via
-      IPv6.  It does not imply anything about what DNS data is served,
-      but requires DNS queries to be received and answered over IPv6.
+      A name server providing DNS services reachable via IPv6.  It does
+      not imply anything about what DNS data is served, but requires DNS
+      queries to be received and answered over IPv6.
 
    Dual-stack name server:
       A name server that is both an "IPv4 name server" and also an "IPv6
@@ -175,36 +179,37 @@ Table of Contents
    that protocol and prevent any of its records from resolving for
    clients only supporting that IP version.  These misconfigurations can
    be kept hidden if most clients can successfully fall back to the
-   other IP version.  As such, these issues are more common for IPv6
-   resolution related name space fragmentation.
+   other IP version.
 
    The following name related misconfigurations can cause broken
    delegation for one IP version:
 
    No A/AAAA records for NS names:
-      If none of the NS records for a zone in their parent zone have
-      associated A or AAAA records, while holding the inverse record,
-      resolution via the concerned IP version is not possible.
+      If all of the NS records for a zone in their parent zone have
+      either only A records or only AAAA records, then resolution via
+      the other IP version is not possible.
 
    Missing GLUE:
-      If the name from an NS record for a zone is in-bailiwick, i.e.,
-      the name is within the zone or below, a parent zone must contain
-      an IPv4 and IPv6 GLUE record, i.e., a parent must serve the
-      corresponding A or AAAA record(s) as ADDITIONAL data when
-      returning the NS record in the ANSWER section.
+      If the name from an NS record for a zone is in-domain, i.e., the
+      name is within the zone or below, a parent zone must contain both
+      IPv4 and IPv6 GLUE records, i.e., a parent must serve the
+      corresponding A and AAAA records as ADDITIONAL data when returning
+      the NS record(s) as the referral response.
 
-   No A/AAAA record for in-bailiwick NS:
-      If an NS record of a zone points to a name that is in-bailiwick
-      but the name lacks corresponding A or AAAA record(s) in its zone,
-      resolution via the concerned IP version will fail even if the
-      parent provides GLUE, when the recursive server validates the
-      delegation path.
+   No A/AAAA record for in-domain NS:
+      If an NS record of a child zone, either provided by the parent or
+      from the child zone's apex, points to a name in the NS RDATA that
+      is in-domain but the name does not contain corresponding A or AAAA
+      record(s) in the child zone, name resolution via the concerned IP
+      version will fail even if the parent provides GLUE, when the
+      recursive server revalidates the delegation path
+      [I-D.ietf-dnsop-ns-revalidation].
 
-   Zone of out-of-bailiwick NSes not resolving:
-      If an NS record of a zone is out-of-bailiwick, the corresponding
-      zone must be resolvable via the IP version in question as well.
-      It is insufficient if the name pointed to by the NS record has an
-      associated A or AAAA record correspondingly.
+   Zone of sibling domain NSes not resolving:
+      If the name from an NS record for a zone is sibling domain, the
+      corresponding zone must be resolvable via the IP version in
+      question as well.  It is insufficient if the name pointed to by
+      the NS record has an associated A or AAAA record correspondingly.
 
    Parent zone not resolvable via one IP version:
       For a zone to be resolvable via an IP version the parent zones up
@@ -214,22 +219,22 @@ Table of Contents
 
    The above misconfigurations are not mutually exclusive.
 
-   Furthermore, any of the misconfigurations above may also materialize
-   not via a missing Resource Record (RR) but via an RR providing the IP
-   address of a nameserver that is not configured to answer queries via
-   that IP version [V6DNSRDY-23].
+   Furthermore, any of the misconfigurations above may not only
+   materialize via a missing Resource Record (RR) but also via an RR
+   providing the IP address of a nameserver that is not configured to
+   answer queries via that IP version [V6DNSRDY-23].
 
 3.2.  Reasons for Intentional IP Version Related Name Space
       Fragmentation
 
    Intentional IP related name space fragmentation occurs if an operator
-   consciously decides to not deploy IPv4 or IPv6 for a part of the
-   resolution chain.  Most commonly, this is realized by consciously not
-   listing A/AAAA records for NS names in and out of bailiwick,
-   including missing GLUE.  At the time of writing, the share of zones
-   not resolvable via IPv4 is negligible, while a little less than 40%
-   of zones are not resolvable via IPv6 [V6DNSRDY-23].  However, as IPv4
-   exhaustion becomes more critical, this will change in the future
+   consciously decides not to deploy IPv4 or IPv6 for a part of the
+   resolution chain.  Most commonly, this is realized by intentionally
+   not listing A/AAAA records for NS names.  At the time of writing, the
+   share of zones not resolvable via IPv4 is negligible, while a little
+   less than 40% of zones are not resolvable via IPv6 [V6DNSRDY-23].
+   However, as IPv4 exhaustion progresses, IPv6 adoption will have to
+   increase.
 
 4.  Policy Based Avoidance of Name Space Fragmentation
 
@@ -237,9 +242,9 @@ Table of Contents
    the progressing deployment of IPv6, there no longer is a "preferred"
    IP version.  Yet, while we now observe the first zones becoming
    exclusively IPv6 resolvable, we also still see a major portion of
-   zones solely relying on legacy IP [V6DNSRDY-23].  Hence, at the
-   moment, dual stack connectivity is instrumental to be able to resolve
-   zones and avoid name space fragmentation.
+   zones solely relying on IPv4 [V6DNSRDY-23].  Hence, at the moment,
+   dual stack connectivity is instrumental to be able to resolve zones
+   and avoid name space fragmentation.
 
    Having zones served only by name servers reachable via one IP version
    would fragment the DNS.  Hence, we need to find a way to avoid this
@@ -248,22 +253,22 @@ Table of Contents
    The recommended approach to maintain name space continuity is to use
    administrative policies, as described in this section.
 
-4.1.  Guidelines for DNS Zone Configuration
+4.1.  Guidelines for Authoritative DNS Server Configuration
 
    It is usually recommended that DNS zones contain at least two name
    servers, which are geographically diverse and operate under different
    routing policies [IANANS].  To reduce the chance of DNS name space
-   fragmentation, it is RECOMMENDED that at least two NS for a zone are
-   dual stack name servers.  Specifically, this means that the following
-   minimal requirements SHOULD be implemented for a zone:
+   fragmentation, it is RECOMMENDED that at least two name servers for a
+   zone are dual stack name servers.  Specifically, this means that the
+   following minimal requirements SHOULD be implemented for a zone:
 
    IPv4 adoption:
       Every authoritative DNS zone SHOULD be served by at least one
       IPv4-reachable authoritative name server to maintain name space
       continuity.  The delegation configuration (Resolution of the
-      parent, resolution of out-of-bailiwick names, GLUE) MUST not rely
-      on IPv6 connectivity being available.  As we acknowledge IPv4
-      scarcity, operators MAY opt to not provide DNS services via IPv4,
+      parent, resolution of sibling domain names, GLUE) MUST NOT rely on
+      IPv6 connectivity being available.  As we acknowledge IPv4
+      scarcity, operators MAY opt not to provide DNS services via IPv4,
       if they can ensure that all clients expected to resolve this zone
       do support DNS resolution via IPv6.
 
@@ -271,40 +276,44 @@ Table of Contents
       Every authoritative DNS zone SHOULD be served by at least one
       IPv6-reachable authoritative name server to maintain name space
       continuity.  The delegation configuration (Resolution of the
-      parent, resolution of out-of-bailiwick names, GLUE) MUST not rely
-      on IPv4 connectivity being available.
+      parent, resolution of sibling domain names, GLUE) MUST NOT rely on
+      IPv4 connectivity being available.
 
    Consistency:
       Both IPv4 and IPv6 transports should serve identical DNS data to
       ensure a consistent resolution experience across different network
       types.
 
+   Avoiding IP Fragmentation:
+      IP fragmentation has been reported to be fragile [RFC8900].
+      Furthermore, IPv6 transition technologies can introduce unexpected
+      MTU breaks, e.g., when NAT64 is used [RFC7269].  Therefore, IP
+      fragmentation SHOULD be avoided by following guidance on maximum
+      DNS payload sizes [RFC9715] and providing TCP fall-back options
+      [RFC7766].
+
    Note: zone validation processes SHOULD ensure that there is at least
    one IPv4 address record and one IPv6 address record available for the
-   name servers of any child delegations within the zone.
+   name servers of any child delegation within the zone.
 
 4.2.  Guidelines for DNS Resolvers
 
-   Every iterative name server SHOULD be dual stack.
+   Every recursive DNS resolver SHOULD be dual stack.
 
-   While the zones that IPv6-only iterative resolvers can resolve are
-   growing but do not yet cover all zones, they cannot fully resolve all
-   zones.  Hence, a recursive resolver MAY be IPv6-only, if it uses a
-   transition mechanism for IPv4 reachability
-   [draft-momoka-v6ops-ipv6-only-resolver-02] or use a configuration
-   where such resolvers forward queries failing IPv6 only DNS resolution
-   to a set of dual-stack recursive name servers that perform the actual
-   recursive queries.
+   While the zones that IPv6-only recursive DNS resolvers can resolve
+   are growing but do not yet cover all zones, they cannot fully resolve
+   all zones.  Hence, a recursive resolver MAY be IPv6-only, if it uses
+   a transition mechanism that allows it to also query IPv4
+   authoritative NS or uses a configuration where it forward queries
+   failing IPv6-only DNS resolution to a set of dual-stack recursive
+   name servers that perform the actual recursive queries.
 
-   Similarly, a recursive resolver MAY be IPv4-only, if it use a
-   configuration where such resolvers forward queries failing IPv4 only
+   Similarly, a recursive resolver MAY be IPv4-only, if it uses a
+   configuration where such resolvers forward queries failing IPv4-only
    DNS resolution to a set of dual-stack recursive name servers that
    perform the actual recursive queries.
 
 5.  Security Considerations
-
-   TODO: This requires some input as, e.g., dual-stack services have
-   implications for ratelimiting etc.
 
    The guidelines described in this memo introduce no new security
    considerations into the DNS protocol or associated operational
@@ -312,19 +321,27 @@ Table of Contents
 
 6.  IANA Considerations
 
-   This document asks IANA to update its technical requirements for
-   authoritative name servers to require an IPv4 and an IPv6 address for
-   each authoritative server [IANANS].
+   This document requests IANA to update its technical requirements for
+   authoritative name servers to require both IPv4 and IPv6 addresses
+   for each authoritative server [IANANS].
 
 Acknowledgments
 
-   TODO: acknowledge people.
+   Valuable input for this draft was provided by: Bob Harold, Andreas
+   Schulze, Tommy Jensen, Nick Buraglio, Jen Linkova
 
    Thank you for reading this draft.
 
 References
 
 Normative References
+
+   [I-D.ietf-dnsop-ns-revalidation]
+              Huque, S., Vixie, P. A., and W. Toorop, "Delegation
+              Revalidation by DNS Resolvers", Work in Progress,
+              Internet-Draft, draft-ietf-dnsop-ns-revalidation-08, 8
+              January 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-dnsop-ns-revalidation-08>.
 
    [RFC1883]  Deering, S. and R. Hinden, "Internet Protocol, Version 6
               (IPv6) Specification", RFC 1883, DOI 10.17487/RFC1883,
@@ -339,31 +356,50 @@ Normative References
               Guidelines", BCP 91, RFC 3901, DOI 10.17487/RFC3901,
               September 2004, <https://www.rfc-editor.org/info/rfc3901>.
 
+   [RFC7766]  Dickinson, J., Dickinson, S., Bellis, R., Mankin, A., and
+              D. Wessels, "DNS Transport over TCP - Implementation
+              Requirements", RFC 7766, DOI 10.17487/RFC7766, March 2016,
+              <https://www.rfc-editor.org/info/rfc7766>.
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
-   [RFC8499]  Hoffman, P., Sullivan, A., and K. Fujiwara, "DNS
-              Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
-              January 2019, <https://www.rfc-editor.org/info/rfc8499>.
+   [RFC9715]  Fujiwara, K. and P. Vixie, "IP Fragmentation Avoidance in
+              DNS over UDP", RFC 9715, DOI 10.17487/RFC9715, January
+              2025, <https://www.rfc-editor.org/info/rfc9715>.
 
 Informative References
 
-   [draft-momoka-v6ops-ipv6-only-resolver-02]
-              山本 桃歌 (Yamamoto, M.) and 豊田 安信 (Y. Toyota), "IPv6-only
-              Capable Resolvers Utilising NAT64", Work in Progress,
-              Internet-Draft, draft-momoka-v6ops-ipv6-only-resolver-02,
-              8 September 2023, <https://datatracker.ietf.org/doc/draft-
-              momoka-v6ops-ipv6-only-resolver/02/>.
+   [I-D.ietf-v6ops-ipv6-only-resolver]
+              Yamamoto, M. and Y. Toyota, "IPv6-only Capable Resolvers
+              Utilising NAT64", Work in Progress, Internet-Draft, draft-
+              ietf-v6ops-ipv6-only-resolver-00, 23 October 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-v6ops-
+              ipv6-only-resolver-00>.
 
    [IANANS]   IANA, "Technical requirements for authoritative name
               servers",
               <https://www.iana.org/help/nameserver-requirements>.
 
+   [RFC7269]  Chen, G., Cao, Z., Xie, C., and D. Binet, "NAT64
+              Deployment Options and Experience", RFC 7269,
+              DOI 10.17487/RFC7269, June 2014,
+              <https://www.rfc-editor.org/info/rfc7269>.
+
+   [RFC8900]  Bonica, R., Baker, F., Huston, G., Hinden, R., Troan, O.,
+              and F. Gont, "IP Fragmentation Considered Fragile",
+              BCP 230, RFC 8900, DOI 10.17487/RFC8900, September 2020,
+              <https://www.rfc-editor.org/info/rfc8900>.
+
    [RFC9386]  Fioccola, G., Volpato, P., Palet Martinez, J., Mishra, G.,
               and C. Xie, "IPv6 Deployment Status", RFC 9386,
               DOI 10.17487/RFC9386, April 2023,
               <https://www.rfc-editor.org/info/rfc9386>.
+
+   [RFC9499]  Hoffman, P. and K. Fujiwara, "DNS Terminology", BCP 219,
+              RFC 9499, DOI 10.17487/RFC9499, March 2024,
+              <https://www.rfc-editor.org/info/rfc9499>.
 
    [RIPEV4]   RIPE NCC, "The RIPE NCC has run out of IPv4 Addresses",
               November 2019, <https://www.ripe.net/publications/news/
@@ -380,13 +416,13 @@ Informative References
 Authors' Addresses
 
    Momoka Yamamoto
-   The University of Tokyo/WIDE Project
+   WIDE Project
    Email: momoka.my6@gmail.com
 
    Additional contact information:
 
       山本 桃歌
-      The University of Tokyo/WIDE Project
+      WIDE Project
 
 
    Tobias Fiebig
