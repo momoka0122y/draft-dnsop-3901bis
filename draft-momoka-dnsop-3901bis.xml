@@ -38,7 +38,7 @@
         <abstract>
     <t indent="0" pn="section-abstract-1">
         This memo provides guidelines and documents Best Current Practice for operating authoritative and recursive DNS servers, given that queries and responses are carried in a mixed environment of IPv4 and IPv6 networks.
-        It expands on RFC 3901 by now suggesting authoritative and recursive resolvers to operate on both IPv4 and IPv6.</t>
+        This document expands on RFC 3901 by recommending that authoritative and recursive resolvers support both IPv4 and IPv6.</t>
     <t indent="0" pn="section-abstract-2">This document obsoletes RFC3901. (if approved)</t>
         </abstract>
         <note removeInRFC="true">
@@ -270,7 +270,7 @@
         <section anchor="iana-considerations">
             <name>IANA Considerations</name>
             <t>
-                This document asks IANA to update its technical requirements for authoritative name servers to require an IPv4 and an IPv6 address for each authoritative server <xref target="IANANS" format="default"/>.
+                This document requests IANA to update its technical requirements for authoritative name servers to require both IPv4 and IPv6 addresses for each authoritative server <xref target="IANANS" format="default"/>.
             </t>
         </section>
         <section numbered="false" anchor="acknowledgments">
