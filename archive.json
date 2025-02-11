@@ -1,0 +1,384 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2025-02-11T00:13:00.648261+00:00",
+  "repo": "momoka0122y/draft-dnsop-3901bis",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 7,
+      "id": "I_kwDOKiJTb851ijVu",
+      "title": "Use terminology of either in-domain, sibling domain, or unrelated instaed of \u201cin-bailiwick\u201d or \u201cout-of-bailiwick\u201d",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/issues/7",
+      "state": "CLOSED",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "> \"Wessels, Duane\" <dwessels@verisign.com>\r\n> \r\n> Hi Momoka,\r\n> \r\n> I see that your draft often uses \u201cin-bailiwick\u201d or \u201cout-of-bailiwick\u201d.  If you are not already aware, the latest version of the DNS terminology document (draft-ietf-dnsop-rfc8499bis) notes that \u201cbailiwick\u201d should be considered historic at this point.  The preferred language is to refer to the relationship between the NS record owner name, the name in the NS RDATA and the zone origin as either in-domain, sibling domain, or unrelated.\r\n> \r\n> DW\r\n\r\n\r\n",
+      "createdAt": "2023-11-01T09:14:32Z",
+      "updatedAt": "2024-04-18T08:49:07Z",
+      "closedAt": "2024-04-18T08:49:07Z",
+      "comments": [
+        {
+          "author": "momoka0122y",
+          "authorAssociation": "OWNER",
+          "body": "done",
+          "createdAt": "2024-04-18T08:49:02Z",
+          "updatedAt": "2024-04-18T08:49:02Z"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "I_kwDOKiJTb853REzt",
+      "title": "comments and edits",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/issues/8",
+      "state": "CLOSED",
+      "author": "gregbo",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I have a couple of comments on the draft:\r\n\r\n- In \u00a71, you mention that IPv6 was first discussed in the mid-1990s.  Some people who follow Internet history might consider the late 1980s, perhaps even earlier, as the start of IPv6 discussions.  Before deciding on IPv6, it was referred to as IPng, and several candidates were proposed.  You may be asked to change this.\r\n\r\n- Consider distinguishing between the phrase 'name server' and the term 'NS' (the record type).  For example, modifying \u00a74.1:\r\n\r\n   _To reduce the chance of DNS name space fragmentation, it is RECOMMENDED that at least two name servers for a zone are\r\n   dual stack name servers._\r\n\r\nI also have some edits in unified diff format:\r\n```\r\n--- draft-momoka-dnsop-3901bis.xml\t2023-11-17 21:22:29\r\n+++ draft-momoka-dnsop-3901bis.xml+\t2023-11-18 23:15:31\r\n@@ -53,7 +53,7 @@\r\n         <section anchor=\"introduction\">\r\n             <name>Introduction</name>\r\n             <t>\r\n-                Despite IPv6 being first discussed in the mid 1990s <xref target=\"RFC1883\" format=\"default\"/>, consistent deployment throughout the whole Internet has not yet been accomplished <xref target=\"RFC9386\" format=\"default\"/>.\r\n+                Despite IPv6 being first discussed in the mid-1990s <xref target=\"RFC1883\" format=\"default\"/>, consistent deployment throughout the whole Internet has not yet been accomplished <xref target=\"RFC9386\" format=\"default\"/>.\r\n                 Hence, today, the Internet is a mixture of IPv4, dual-stack (networks connected via both IP versions), and IPv6 networks.\r\n             </t>\r\n             <t>\r\n@@ -180,7 +180,7 @@\r\n             <section anchor=\"reasons-for-intentional-ip-version-related-name-space-fragmentation\">\r\n                 <name>Reasons for Intentional IP Version Related Name Space Fragmentation</name>\r\n                 <t>\r\n-                    Intentional IP related name space fragmentation occurs if an operator consciously decides to not deploy IPv4 or IPv6 for a part of the resolution chain.\r\n+                    Intentional IP related name space fragmentation occurs if an operator consciously decides not to deploy IPv4 or IPv6 for a part of the resolution chain.\r\n                     Most commonly, this is realized by consciously not listing A/AAAA records for NS names in and out of bailiwick, including missing GLUE.\r\n                     At the time of writing, the share of zones not resolvable via IPv4 is negligible, while a little less than 40% of zones are not resolvable via IPv6 <xref target=\"V6DNSRDY-23\" format=\"default\"/>.\r\n                     However, as IPv4 exhaustion becomes more critical, this will change in the future\r\n@@ -215,7 +215,7 @@\r\n                     <dd>\r\n                             Every authoritative DNS zone <bcp14>SHOULD</bcp14> be served by at least one IPv4-reachable authoritative name server to maintain name space continuity.\r\n                             The delegation configuration (Resolution of the parent, resolution of out-of-bailiwick names, GLUE) <bcp14>MUST</bcp14> not rely on IPv6 connectivity being available.\r\n-                            As we acknowledge IPv4 scarcity, operators <bcp14>MAY</bcp14> opt to not provide DNS services via IPv4, if they can ensure that all clients expected to resolve this zone do support DNS resolution via IPv6.\r\n+                            As we acknowledge IPv4 scarcity, operators <bcp14>MAY</bcp14> opt not to provide DNS services via IPv4, if they can ensure that all clients expected to resolve this zone do support DNS resolution via IPv6.\r\n                     </dd>\r\n                     <dt>\r\n                             IPv6 adoption:\r\n@@ -242,10 +242,10 @@\r\n                 </t>\r\n                 <t>\r\n                     While the zones that IPv6-only iterative resolvers can resolve are growing but do not yet cover all zones, they cannot fully resolve all zones.\r\n-                    Hence, a recursive resolver <bcp14>MAY</bcp14> be IPv6-only, if it uses a transition mechanism for IPv4 reachability <xref target=\"draft-momoka-v6ops-ipv6-only-resolver-02\" format=\"default\"/> or use a configuration where such resolvers forward queries failing IPv6 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.\r\n+                    Hence, a recursive resolver <bcp14>MAY</bcp14> be IPv6-only, if it uses a transition mechanism for IPv4 reachability <xref target=\"draft-momoka-v6ops-ipv6-only-resolver-02\" format=\"default\"/> or uses a configuration where such resolvers forward queries failing IPv6-only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.\r\n                 </t>\r\n                 <t>\r\n-                    Similarly, a recursive resolver <bcp14>MAY</bcp14> be IPv4-only, if it use a configuration where such resolvers forward queries failing IPv4 only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.\r\n+                    Similarly, a recursive resolver <bcp14>MAY</bcp14> be IPv4-only, if it uses a configuration where such resolvers forward queries failing IPv4-only DNS resolution to a set of dual-stack recursive name servers that perform the actual recursive queries.\r\n                 </t>\r\n             </section>\r\n         </section>\r\n```",
+      "createdAt": "2023-11-19T17:59:12Z",
+      "updatedAt": "2024-04-19T05:26:37Z",
+      "closedAt": "2024-04-19T05:26:37Z",
+      "comments": [
+        {
+          "author": "momoka0122y",
+          "authorAssociation": "OWNER",
+          "body": "Thank you for your review.\r\nI have added you recommendation and it will be reflected in the next version.",
+          "createdAt": "2024-04-19T05:26:34Z",
+          "updatedAt": "2024-04-19T05:26:34Z"
+        }
+      ]
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOKiJTb85dYbgt",
+      "title": "PR for updates to the RFC bis + convert to XML",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/pull/1",
+      "state": "MERGED",
+      "author": "ichdasich",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-20T13:17:06Z",
+      "updatedAt": "2023-10-22T15:46:31Z",
+      "baseRepository": "momoka0122y/draft-dnsop-3901bis",
+      "baseRefName": "main",
+      "baseRefOid": "1270efb030aee98ac07f8a8850013c4b759a08aa",
+      "headRepository": "ichdasich/draft-dnsop-3901bis",
+      "headRefName": "main",
+      "headRefOid": "6d91376a0b49b2cddacbe9b290bcb3e9dd761aa0",
+      "closedAt": "2023-10-22T15:46:31Z",
+      "mergedAt": "2023-10-22T15:46:31Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "d011677fd6191ac120adeae66d029bca4a8855c0"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOKiJTb85dd66k",
+      "title": "Make changes",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/pull/2",
+      "state": "MERGED",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-22T16:18:35Z",
+      "updatedAt": "2023-10-22T17:58:53Z",
+      "baseRepository": "momoka0122y/draft-dnsop-3901bis",
+      "baseRefName": "main",
+      "baseRefOid": "d011677fd6191ac120adeae66d029bca4a8855c0",
+      "headRepository": "momoka0122y/draft-dnsop-3901bis",
+      "headRefName": "make-changes",
+      "headRefOid": "fbac65ad77abd06427f7399ddfaab4e63f5dd708",
+      "closedAt": "2023-10-22T17:21:32Z",
+      "mergedAt": "2023-10-22T17:21:32Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "183fc3b3650be8be80c19fa5618dc01b9a67533b"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOKiJTb85deBTM",
+      "title": "remove white space",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/pull/3",
+      "state": "MERGED",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-22T17:56:52Z",
+      "updatedAt": "2023-10-22T17:58:26Z",
+      "baseRepository": "momoka0122y/draft-dnsop-3901bis",
+      "baseRefName": "main",
+      "baseRefOid": "183fc3b3650be8be80c19fa5618dc01b9a67533b",
+      "headRepository": "momoka0122y/draft-dnsop-3901bis",
+      "headRefName": "fix-lint",
+      "headRefOid": "82dd709cbdaf8456527b5fca49b45a486484a12a",
+      "closedAt": "2023-10-22T17:58:19Z",
+      "mergedAt": "2023-10-22T17:58:19Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "129fe478318afe6a77907bf72c79399ecf9e84c4"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOKiJTb85deDGm",
+      "title": "obsoletes 3901",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/pull/4",
+      "state": "MERGED",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-22T18:23:43Z",
+      "updatedAt": "2023-10-22T18:24:02Z",
+      "baseRepository": "momoka0122y/draft-dnsop-3901bis",
+      "baseRefName": "main",
+      "baseRefOid": "129fe478318afe6a77907bf72c79399ecf9e84c4",
+      "headRepository": "momoka0122y/draft-dnsop-3901bis",
+      "headRefName": "obsoletes",
+      "headRefOid": "7152fe0d202cea94e900f05d862e5afb2d862708",
+      "closedAt": "2023-10-22T18:23:58Z",
+      "mergedAt": "2023-10-22T18:23:58Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "2249b1125c30f45713fa11653f2d5602e75c55bb"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDOKiJTb85djvQr",
+      "title": "Correct RFC references and add new informative citation",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/pull/5",
+      "state": "MERGED",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-23T17:46:23Z",
+      "updatedAt": "2023-10-23T17:59:22Z",
+      "baseRepository": "momoka0122y/draft-dnsop-3901bis",
+      "baseRefName": "main",
+      "baseRefOid": "2249b1125c30f45713fa11653f2d5602e75c55bb",
+      "headRepository": "momoka0122y/draft-dnsop-3901bis",
+      "headRefName": "refference",
+      "headRefOid": "2576bd8b52333c159653dae4ceb65f9f403bfab7",
+      "closedAt": "2023-10-23T17:46:31Z",
+      "mergedAt": "2023-10-23T17:46:31Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "18fee07f70c1086661d983ab033ee51ed09ced74"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOKiJTb85dj-US",
+      "title": "nit: remove unrelated text",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/pull/6",
+      "state": "MERGED",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-23T18:26:56Z",
+      "updatedAt": "2023-10-23T18:27:08Z",
+      "baseRepository": "momoka0122y/draft-dnsop-3901bis",
+      "baseRefName": "main",
+      "baseRefOid": "18fee07f70c1086661d983ab033ee51ed09ced74",
+      "headRepository": "momoka0122y/draft-dnsop-3901bis",
+      "headRefName": "fix",
+      "headRefOid": "5f2fa9a46532ea4d63b36fb240853173e0c860bd",
+      "closedAt": "2023-10-23T18:27:04Z",
+      "mergedAt": "2023-10-23T18:27:04Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "47e2e9b1027cfcca1836f2bc65317a22a31818d2"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOKiJTb85q0Bd3",
+      "title": "Change abstract and nit",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/pull/9",
+      "state": "MERGED",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-03-26T15:54:23Z",
+      "updatedAt": "2024-03-26T15:54:49Z",
+      "baseRepository": "momoka0122y/draft-dnsop-3901bis",
+      "baseRefName": "main",
+      "baseRefOid": "47e2e9b1027cfcca1836f2bc65317a22a31818d2",
+      "headRepository": "momoka0122y/draft-dnsop-3901bis",
+      "headRefName": "momoka0122y-patch-1",
+      "headRefOid": "122f8a2f73fa1dc5c5430e7d41f77b9e8db375e5",
+      "closedAt": "2024-03-26T15:54:49Z",
+      "mergedAt": "2024-03-26T15:54:49Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "63730ee92329c4ae65d426d9c6a97f2b7e91ce78"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOKiJTb85_Tau3",
+      "title": "updates from DNSOP",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/pull/10",
+      "state": "MERGED",
+      "author": "ichdasich",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Minor changes based on feedback on DNSOP",
+      "createdAt": "2024-10-21T11:11:15Z",
+      "updatedAt": "2025-02-09T07:33:20Z",
+      "baseRepository": "momoka0122y/draft-dnsop-3901bis",
+      "baseRefName": "main",
+      "baseRefOid": "843fdfb734a39ddc7ae6ecc85c858a3dda3fd608",
+      "headRepository": "ichdasich/draft-dnsop-3901bis",
+      "headRefName": "main",
+      "headRefOid": "7d43830aeaef77d9ceb12c595b1c3fff3332ce44",
+      "closedAt": "2025-02-09T07:33:20Z",
+      "mergedAt": "2025-02-09T07:33:20Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "e8145bea2a7a481b99909c99008b1291670e5a43"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOKiJTb86KiwQt",
+      "title": "Update github actions",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/pull/11",
+      "state": "MERGED",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-09T07:41:10Z",
+      "updatedAt": "2025-02-09T07:41:18Z",
+      "baseRepository": "momoka0122y/draft-dnsop-3901bis",
+      "baseRefName": "main",
+      "baseRefOid": "e8145bea2a7a481b99909c99008b1291670e5a43",
+      "headRepository": "momoka0122y/draft-dnsop-3901bis",
+      "headRefName": "momoka0122y-patch-2",
+      "headRefOid": "536c489ad6214960c55bea3baa2d3ab5abe2830d",
+      "closedAt": "2025-02-09T07:41:18Z",
+      "mergedAt": "2025-02-09T07:41:18Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "dec9bf4b8bf4427584859dce65939ac1aaac8129"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOKiJTb86Kiw2w",
+      "title": "GitHub actions",
+      "url": "https://github.com/momoka0122y/draft-dnsop-3901bis/pull/12",
+      "state": "MERGED",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-09T07:47:52Z",
+      "updatedAt": "2025-02-09T07:48:02Z",
+      "baseRepository": "momoka0122y/draft-dnsop-3901bis",
+      "baseRefName": "main",
+      "baseRefOid": "dec9bf4b8bf4427584859dce65939ac1aaac8129",
+      "headRepository": "momoka0122y/draft-dnsop-3901bis",
+      "headRefName": "github-actions",
+      "headRefOid": "535e8d22dc923d3b4a3d3c551b175cb8d658fa9b",
+      "closedAt": "2025-02-09T07:48:02Z",
+      "mergedAt": "2025-02-09T07:48:02Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "0f961b72f8099f1090940e63cec8d86b5569b8ba"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
